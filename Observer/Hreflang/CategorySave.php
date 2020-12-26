@@ -12,8 +12,8 @@ use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class CategorySave
- *
  * Trigger the creation/update of hreflang links inside hreflang table for a category entity.
+ *
  * @package Seo\Hreflang\Observer\Hreflang
  */
 class CategorySave implements ObserverInterface

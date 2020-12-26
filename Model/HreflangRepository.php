@@ -2,9 +2,11 @@
 
 namespace Seo\Hreflang\Model;
 
+use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SortOrder;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Seo\Hreflang\Api\Data\HreflangInterface;
@@ -92,6 +94,7 @@ class HreflangRepository implements HreflangRepositoryInterface
      *
      * @param HreflangInterface $hreflang
      * @return HreflangInterface
+     * @throws AlreadyExistsException
      */
     public function save(HreflangInterface $hreflang)
     {
@@ -104,6 +107,7 @@ class HreflangRepository implements HreflangRepositoryInterface
      *
      * @param HreflangInterface $hreflang
      * @return void
+     * @throws Exception
      */
     public function delete(HreflangInterface $hreflang)
     {
@@ -145,13 +149,11 @@ class HreflangRepository implements HreflangRepositoryInterface
         $searchCriteria = $searchCriteriaBuilder
             ->addFilter(
                 HreflangInterface::ENTITY_ID,
-                $entityId,
-                'eq'
+                $entityId
             )
             ->addFilter(
                 HreflangInterface::ENTITY_TYPE,
-                $entityType,
-                'eq'
+                $entityType
             )->create();
         $results = $this->getList($searchCriteria)->getItems();
         // Return exception if the item does not exist
@@ -186,18 +188,15 @@ class HreflangRepository implements HreflangRepositoryInterface
         $searchCriteria = $searchCriteriaBuilder
             ->addFilter(
                 HreflangInterface::ENTITY_ID,
-                $entityId,
-                'eq'
+                $entityId
             )
             ->addFilter(
                 HreflangInterface::ENTITY_TYPE,
-                $entityType,
-                'eq'
+                $entityType
             )
             ->addFilter(
                 HreflangInterface::STORE_ID,
-                $storeId,
-                'eq'
+                $storeId
             )->create();
         $results = $this->getList($searchCriteria)->getItems();
 

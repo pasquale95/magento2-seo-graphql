@@ -12,7 +12,7 @@ use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class CmsPageSave
- * Trigger the creation/update of hreflang links inside hreflang table for a page entity
+ * Trigger the creation/update of hreflang links inside hreflang table for a page entity.
  *
  * @package Seo\Hreflang\Observer\Hreflang
  */

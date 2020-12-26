@@ -11,10 +11,18 @@
             <group id="frontend_settings" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Frontend PWA Settings</label>
                 <comment>Section to fill with frontend-related information.</comment>
+                <field id="use_pwa_frontend" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Frontend PWA</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you are using the PWA technology and a separated server for the frontend.</comment>
+                </field>
                 <field id="frontend_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Frontend URL</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Baseurl</backend_model>
                     <comment>Specify the domain at with the PWA frontend is reachable e.g. http://0.0.0.0:1000/</comment>
+                    <depends>
+                        <field id="web/frontend_settings/use_pwa_frontend">1</field>
+                    </depends>
                 </field>
             </group>
         </section>

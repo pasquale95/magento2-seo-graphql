@@ -12,7 +12,7 @@ use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class ProductSave
- * Trigger the creation/update of hreflang links inside hreflang table for a product entity
+ * Trigger the creation/update of hreflang links inside hreflang table for a product entity.
  *
  * @package Seo\Hreflang\Observer\Hreflang
  */

@@ -4,6 +4,7 @@ namespace Seo\Hreflang\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
@@ -44,16 +45,17 @@ class Store extends AbstractHelper
      * @param string|null $storeId
      * @return string
      */
-    public function getHreflang($storeId = null)
-    {
+    public function getHreflang($storeId = null) {
         return $this->scopeConfig->getValue('web/seo/hreflang', ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     /**
      * Returns associative array of type ['storeId' => ['hreflang', 'baseUrl']]
      * @return array
+     * @throws NoSuchEntityException
      */
-    public function getHreflangList() {
+    public function getHreflangList()
+    {
         $storeList = $this->storeManager->getStores();
         $hreflangs = [];
         foreach ($storeList as $store) {
