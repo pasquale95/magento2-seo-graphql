@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="web">
+            <group id="seo">
+                <field id="hreflang" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hreflang</label>
+                    <comment>Specify the hreflang tag to use for the store view according to the ISO 639-1.</comment>
+                </field>
+            </group>
+            <group id="frontend_settings" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Frontend PWA Settings</label>
+                <comment>Section to fill with frontend-related information.</comment>
+                <field id="frontend_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Frontend URL</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Baseurl</backend_model>
+                    <comment>Specify the domain at with the PWA frontend is reachable e.g. http://0.0.0.0:1000/</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,28 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="hreflang" resource="default" engine="innodb" comment="Hreflang table">
+        <column xsi:type="int" name="hreflang_id" unsigned="true" nullable="false" identity="true"
+                comment="Hreflang ID"/>
+        <column xsi:type="varchar" name="entity_id" nullable="false" length="255" comment="Entity ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
+                comment="Store ID"/>
+        <column xsi:type="varchar" name="entity_type" nullable="false" length="32" comment="Entity type code"/>
+        <column xsi:type="varchar" name="code" nullable="true" length="255" comment="Hreflang code"/>
+        <column xsi:type="varchar" name="url" nullable="true" length="255" comment="Href url"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="hreflang_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="HREFLANG_ENTITY_ID_STORE_ID_ENTITY_TYPE">
+            <column name="entity_id"/>
+            <column name="store_id"/>
+            <column name="entity_type"/>
+        </constraint>
+        <index referenceId="HREFLANG_STORE_ID_ENTITY_ID" indexType="btree">
+            <column name="store_id"/>
+            <column name="entity_id"/>
+        </index>
+        <index referenceId="HREFLANG_ENTITY_ID" indexType="btree">
+            <column name="entity_id"/>
+        </index>
+    </table>
+</schema>

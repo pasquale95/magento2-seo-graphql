@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- COMMAND CONSOLE -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="generate" xsi:type="object">Seo\Hreflang\Console\Hreflang</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- HREFLANG -->
+    <preference type="Seo\Hreflang\Model\HreflangRepository" for="Seo\Hreflang\Api\HreflangRepositoryInterface"/>
+    <preference type="Seo\Hreflang\Model\Hreflang" for="Seo\Hreflang\Api\Data\HreflangInterface"/>
+    <preference type="Seo\Hreflang\Model\HreflangSearchResults" for="Seo\Hreflang\Api\Data\HreflangSearchResultsInterface"/>
+</config>
