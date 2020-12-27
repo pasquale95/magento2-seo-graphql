@@ -13,7 +13,12 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Config\Model\Config\Backend\Admin\Custom;
 
+/**
+ * Class Store
+ * @package Seo\Hreflang\Helper
+ */
 class Store extends AbstractHelper
 {
     const HREFLANG = 'hreflang';
@@ -46,13 +51,44 @@ class Store extends AbstractHelper
     }
 
     /**
-     * Return the hreflang attribute for a given store
+     * Return the hreflang attribute for a given store.
      *
      * @param string|null $storeId
      * @return string
      */
     public function getHreflang($storeId = null) {
-        return $this->scopeConfig->getValue('web/seo/hreflang', ScopeInterface::SCOPE_STORE, $storeId);
+        $code = null;
+
+        $useLocale = $this->scopeConfig->getValue(
+            'seo/hreflang/use_locale',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        if ($useLocale) {
+            // use locale if option is enabled
+            $code = $this->scopeConfig->getValue(
+                Custom::XML_PATH_GENERAL_LOCALE_CODE,
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+        } else {
+            // otherwise, check for possible custom options
+            $code = $this->scopeConfig->getValue(
+                'seo/hreflang/custom_hreflang',
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+            if (!$code) {
+                //if no custom options, look at the standard hreflang
+                $code = $this->scopeConfig->getValue(
+                    'seo/hreflang/hreflang_lang',
+                    ScopeInterface::SCOPE_STORE,
+                    $storeId
+                );
+            }
+        }
+        return $code ? str_replace("_", "-", strtolower($code)) : null;
     }
 
     /**

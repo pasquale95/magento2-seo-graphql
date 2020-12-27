@@ -9,13 +9,50 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="web">
-            <group id="seo">
-                <field id="hreflang" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Hreflang</label>
-                    <comment>Specify the hreflang tag to use for the store view according to the ISO 639-1.</comment>
+        <section id="seo" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>SEO</label>
+            <tab>catalog</tab>
+            <resource>Seo_Hreflang::hreflang</resource>
+            <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
+                <label>Hreflang Settings</label>
+                <field id="category_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Hreflang for Category</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable hreflang completion for categories.</comment>
+                </field>
+                <field id="product_hreflang" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Hreflang for Product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable hreflang completion for products.</comment>
+                </field>
+                <field id="page_hreflang" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Hreflang for Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable hreflang completion for cms pages.</comment>
+                </field>
+                <field id="use_locale" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Use Locale for Hreflang</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if the store language is the same defined as locale.</comment>
+                </field>
+                <field id="hreflang_lang" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Hreflang Language</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale</source_model>
+                    <depends>
+                        <field id="use_locale">0</field>
+                    </depends>
+                    <comment>Choose the language and country to use as hreflang code. If the requested option is not available, add the code in the option below.</comment>
+                </field>
+                <field id="custom_hreflang" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Hreflang Custom Code</label>
+                    <depends>
+                        <field id="use_locale">0</field>
+                    </depends>
+                    <comment>Specify the hreflang code to use for the store view according to the ISO 639-1 (e.g. it-it).</comment>
                 </field>
             </group>
+        </section>
+        <section id="web">
             <group id="frontend_settings" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Frontend PWA Settings</label>
                 <comment>Section to fill with frontend-related information.</comment>
