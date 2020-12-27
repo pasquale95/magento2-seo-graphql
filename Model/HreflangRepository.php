@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Pasquale Convertini (@Pasquale95)
+ *
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE', which is part of this source code package.
+ */
 
 namespace Seo\Hreflang\Model;
 
@@ -15,7 +21,6 @@ use Seo\Hreflang\Api\Data\HreflangSearchResultsInterfaceFactory;
 use Seo\Hreflang\Api\HreflangRepositoryInterface;
 use Seo\Hreflang\Model\ResourceModel\Hreflang;
 use Seo\Hreflang\Model\ResourceModel\Hreflang\CollectionFactory as HreflangCollectionFactory;
-use Seo\Hreflang\Model\HreflangFactory;
 use Seo\Hreflang\Model\ResourceModel\Hreflang\Collection;
 
 /**

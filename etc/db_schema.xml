@@ -1,3 +1,12 @@
+<?xml version="1.0"?>
+<!--
+ /**
+  * @author Pasquale Convertini (@Pasquale95)
+  *
+  * This file is subject to the terms and conditions defined in
+  * file 'LICENSE', which is part of this source code package.
+  */
+-->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="hreflang" resource="default" engine="innodb" comment="Hreflang table">
