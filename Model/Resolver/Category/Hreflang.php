@@ -52,8 +52,15 @@ class Hreflang implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        $hreflang = $this->hreflangHelper->getStoresHrefLang($value['id'],
-            CategoryUrlRewriteGenerator::ENTITY_TYPE);
+        // retrieve hreflangs
+        $storeId = $context->getExtensionAttributes()->getStore()->getStoreId();
+        $hreflang = $this->hreflangHelper->getStoresHrefLang(
+            $value['id'],
+            CategoryUrlRewriteGenerator::ENTITY_TYPE,
+            $storeId
+        );
+
+        // if entries are available, insert them in the array
         $hreflangList = [];
         foreach ($hreflang as $code => $url) {
             array_push(
@@ -64,6 +71,7 @@ class Hreflang implements ResolverInterface
                 ]
             );
         }
+
         return empty($hreflangList) ? null : $hreflangList;
     }
 }

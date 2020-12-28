@@ -13,6 +13,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\ScopeInterface;
 use Seo\Hreflang\Api\Data\HreflangInterface;
 use Seo\Hreflang\Helper\Url as Url;
 use Seo\Hreflang\Model\HreflangFactory;
@@ -47,6 +48,7 @@ class Hreflang extends AbstractHelper
      * @param HreflangFactory $hreflangFactory
      * @param HreflangRepositoryFactory $hreflangRepositoryFactory
      * @param Store $storeHelper
+     * @throws NoSuchEntityException
      */
     public function __construct(
         Context $context,
@@ -69,6 +71,7 @@ class Hreflang extends AbstractHelper
      * @param $entityType
      * @param $storeId
      * @return HreflangInterface
+     * @throws LocalizedException
      */
     public function getStoreHreflang($entityId, $entityType, $storeId)
     {
@@ -90,11 +93,25 @@ class Hreflang extends AbstractHelper
      *
      * @param $entityId
      * @param $entityType
+     * @param $storeId
      * @return array
      */
-    public function getStoresHrefLang($entityId, $entityType)
+    public function getStoresHrefLang($entityId, $entityType, $storeId)
     {
         $results = [];
+
+        // check if hreflang is enabled for the entity type
+        $useHreflang = $this->scopeConfig->getValue(
+            'seo/hreflang/' . str_replace("-", "_", $entityType) . '_hreflang',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        if (!$useHreflang) {
+            // do not populate hreflang in graphql if disabled for the entity
+            return $results;
+        }
+
+        // hreflang is enabled, populate the array
         $hreflangRepository = $this->hreflangRepositoryFactory->create();
         try {
             $hreflangs = $hreflangRepository->getByEntity(

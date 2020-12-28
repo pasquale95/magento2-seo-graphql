@@ -53,10 +53,15 @@ class Hreflang implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        // retrieve hreflangs
+        $storeId = $context->getExtensionAttributes()->getStore()->getStoreId();
         $hreflang = $this->hreflangHelper->getStoresHrefLang(
             $value[PageInterface::IDENTIFIER],
-            CmsPageUrlRewriteGenerator::ENTITY_TYPE
+            CmsPageUrlRewriteGenerator::ENTITY_TYPE,
+            $storeId
         );
+
+        // if entries are available, insert them in the array
         $hreflangList = [];
         foreach ($hreflang as $code => $url) {
             array_push(
