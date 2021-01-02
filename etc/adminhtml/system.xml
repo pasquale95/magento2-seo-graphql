@@ -13,7 +13,7 @@
         <section id="seo" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>SEO</label>
             <tab>catalog</tab>
-            <resource>Seo_Hreflang::hreflang</resource>
+            <resource>Paskel_Seo::hreflang</resource>
             <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Hreflang Settings</label>
                 <field id="category_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
