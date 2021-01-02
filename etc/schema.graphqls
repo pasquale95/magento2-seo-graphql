@@ -2,18 +2,27 @@ type CmsPage {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang tags to insert in the <head> for the page.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\Hreflang")
+    socialMarkup: [SocialMarkup]
+        @doc(description: "Returns the social markup properties to insert in the <head> for the page.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\SocialMarkup")
 }
 
 interface ProductInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the product.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\Hreflang")
+    socialMarkup: [SocialMarkup]
+        @doc(description: "Returns the social markup properties to insert in the <head> for the product.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\SocialMarkup")
 }
 
 interface CategoryInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the category.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\Hreflang")
+    socialMarkup: [SocialMarkup]
+        @doc(description: "Returns the social markup properties to insert in the <head> for the category.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\SocialMarkup")
 }
 
 type Hreflang @doc(description: "Hreflang object"){
@@ -21,4 +30,11 @@ type Hreflang @doc(description: "Hreflang object"){
         @doc(description: "The hreflang code, according to ISO 639-1.")
     href: String
         @doc(description: "The href url.")
+}
+
+type SocialMarkup @doc(description: "Property field with its content."){
+    property: String
+        @doc(description: "The meta property.")
+    content: String
+        @doc(description: "The meta content.")
 }

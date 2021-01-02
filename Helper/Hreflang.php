@@ -84,7 +84,7 @@ class Hreflang extends AbstractHelper
                 $entityType
             );
         } catch (NoSuchEntityException $e) {
-            // silent exception, let's just return an empty array if the entity does not exist
+            // silent exception, let's just return null if the entity does not exist
         }
         return null;
     }
