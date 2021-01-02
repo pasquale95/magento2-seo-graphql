@@ -10,13 +10,13 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="catalog_category_save_after">
-        <observer name="category_hreflang_save" instance="Seo\Hreflang\Observer\Hreflang\CategorySave" />
+        <observer name="category_hreflang_save" instance="Paskel\Seo\Observer\Hreflang\CategorySave" />
     </event>
     <event name="catalog_product_save_after">
-        <observer name="product_hreflang_save" instance="Seo\Hreflang\Observer\Hreflang\ProductSave" />
+        <observer name="product_hreflang_save" instance="Paskel\Seo\Observer\Hreflang\ProductSave" />
     </event>
     <event name="cms_page_prepare_save">
-        <observer name="product_hreflang_save" instance="Seo\Hreflang\Observer\Hreflang\CmsPageSave" />
+        <observer name="product_hreflang_save" instance="Paskel\Seo\Observer\Hreflang\CmsPageSave" />
     </event>
     <!--<event name="catalog_product_delete_before">
         <observer name="category_hreflang_delete" instance="Magento\MediaContentCatalog\Observer\ProductDelete" />

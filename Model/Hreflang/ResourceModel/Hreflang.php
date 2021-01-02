@@ -7,12 +7,12 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model\ResourceModel;
+namespace Paskel\Seo\Model\Hreflang\ResourceModel;
 
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Seo\Hreflang\Api\Data\HreflangInterface;
+use Paskel\Seo\Api\Data\HreflangInterface;
 
 class Hreflang extends AbstractDb
 {

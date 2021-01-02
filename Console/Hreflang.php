@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Console;
+namespace Paskel\Seo\Console;
 
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
@@ -16,7 +16,7 @@ use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
 use Magento\Framework\Exception\LocalizedException;
-use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,7 +26,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * CLI command to run in order to generate all the hreflang attributes for products,
  * categories and CMS pages.
  *
- * @package Seo\Hreflang\Console
+ * @package Paskel\Seo\Console
  */
 class Hreflang extends Command
 {

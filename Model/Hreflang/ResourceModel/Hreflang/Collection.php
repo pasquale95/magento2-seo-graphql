@@ -7,10 +7,10 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model\ResourceModel\Hreflang;
+namespace Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-use Seo\Hreflang\Api\Data\HreflangInterface;
+use Paskel\Seo\Api\Data\HreflangInterface;
 
 class Collection extends AbstractCollection
 {
@@ -36,6 +36,6 @@ class Collection extends AbstractCollection
      */
     protected function _construct()
     {
-        $this->_init('Seo\Hreflang\Model\Hreflang', 'Seo\Hreflang\Model\ResourceModel\Hreflang');
+        $this->_init('Paskel\Seo\Model\Hreflang\Hreflang', 'Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang');
     }
 }

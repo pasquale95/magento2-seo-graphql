@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model\Product;
+namespace Paskel\Seo\Model\Product;
 
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Url as MagentoUrl;

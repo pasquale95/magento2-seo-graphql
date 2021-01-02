@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Helper;
+namespace Paskel\Seo\Helper;
 
 use Magento\Catalog\Helper\Product;
 use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;

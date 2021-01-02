@@ -13,12 +13,12 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="generate" xsi:type="object">Seo\Hreflang\Console\Hreflang</item>
+                <item name="generate" xsi:type="object">Paskel\Seo\Console\Hreflang</item>
             </argument>
         </arguments>
     </type>
     <!-- HREFLANG -->
-    <preference type="Seo\Hreflang\Model\HreflangRepository" for="Seo\Hreflang\Api\HreflangRepositoryInterface"/>
-    <preference type="Seo\Hreflang\Model\Hreflang" for="Seo\Hreflang\Api\Data\HreflangInterface"/>
-    <preference type="Seo\Hreflang\Model\HreflangSearchResults" for="Seo\Hreflang\Api\Data\HreflangSearchResultsInterface"/>
+    <preference type="Paskel\Seo\Model\Hreflang\HreflangRepository" for="Paskel\Seo\Api\HreflangRepositoryInterface"/>
+    <preference type="Paskel\Seo\Model\Hreflang\Hreflang" for="Paskel\Seo\Api\Data\HreflangInterface"/>
+    <preference type="Paskel\Seo\Model\Hreflang\HreflangSearchResults" for="Paskel\Seo\Api\Data\HreflangSearchResultsInterface"/>
 </config>

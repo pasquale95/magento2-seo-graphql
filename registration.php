@@ -11,6 +11,6 @@ use Magento\Framework\Component\ComponentRegistrar;
 
 ComponentRegistrar::register(
     ComponentRegistrar::MODULE,
-    'Seo_Hreflang',
+    'Paskel_Seo',
     __DIR__
 );

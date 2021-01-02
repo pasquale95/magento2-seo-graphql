@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Observer\Hreflang;
+namespace Paskel\Seo\Observer\Hreflang;
 
 use Magento\Catalog\Model\Category;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator;
@@ -15,13 +15,13 @@ use Magento\Cms\Model\Page\Authorization;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class CategorySave
  * Trigger the creation/update of hreflang links inside hreflang table for a category entity.
  *
- * @package Seo\Hreflang\Observer\Hreflang
+ * @package Paskel\Seo\Observer\Hreflang
  */
 class CategorySave implements ObserverInterface
 {

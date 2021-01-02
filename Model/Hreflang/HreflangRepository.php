@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model;
+namespace Paskel\Seo\Model\Hreflang;
 
 use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
@@ -16,17 +16,17 @@ use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Seo\Hreflang\Api\Data\HreflangInterface;
-use Seo\Hreflang\Api\Data\HreflangSearchResultsInterface;
-use Seo\Hreflang\Api\Data\HreflangSearchResultsInterfaceFactory;
-use Seo\Hreflang\Api\HreflangRepositoryInterface;
-use Seo\Hreflang\Model\ResourceModel\Hreflang;
-use Seo\Hreflang\Model\ResourceModel\Hreflang\CollectionFactory as HreflangCollectionFactory;
-use Seo\Hreflang\Model\ResourceModel\Hreflang\Collection;
+use Paskel\Seo\Api\Data\HreflangInterface;
+use Paskel\Seo\Api\Data\HreflangSearchResultsInterface;
+use Paskel\Seo\Api\Data\HreflangSearchResultsInterfaceFactory;
+use Paskel\Seo\Api\HreflangRepositoryInterface;
+use Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang;
+use Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang\CollectionFactory as HreflangCollectionFactory;
+use Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang\Collection;
 
 /**
  * Class HreflangRepository
- * @package Seo\Hreflang\Model
+ * @package Paskel\Seo\Model
  */
 class HreflangRepository implements HreflangRepositoryInterface
 {

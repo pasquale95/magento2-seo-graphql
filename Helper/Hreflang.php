@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Helper;
+namespace Paskel\Seo\Helper;
 
 use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -15,10 +15,10 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
-use Seo\Hreflang\Api\Data\HreflangInterface;
-use Seo\Hreflang\Helper\Url as Url;
-use Seo\Hreflang\Model\HreflangFactory;
-use Seo\Hreflang\Model\HreflangRepositoryFactory;
+use Paskel\Seo\Api\Data\HreflangInterface;
+use Paskel\Seo\Helper\Url as Url;
+use Paskel\Seo\Model\Hreflang\HreflangFactory;
+use Paskel\Seo\Model\Hreflang\HreflangRepositoryFactory;
 
 class Hreflang extends AbstractHelper
 {
@@ -72,7 +72,6 @@ class Hreflang extends AbstractHelper
      * @param $entityType
      * @param $storeId
      * @return HreflangInterface
-     * @throws LocalizedException
      */
     public function getStoreHreflang($entityId, $entityType, $storeId)
     {

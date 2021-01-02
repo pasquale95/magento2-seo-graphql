@@ -9,7 +9,7 @@
   */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Seo_Hreflang">
+    <module name="Paskel_Seo">
         <sequence>
             <module name="Magento_Catalog"/>
             <module name="Magento_Search"/>

@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Api\Data;
+namespace Paskel\Seo\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
@@ -21,14 +21,14 @@ interface HreflangSearchResultsInterface extends SearchResultsInterface
     /**
      * Get pages list.
      *
-     * @return \Seo\Hreflang\Api\Data\HreflangInterface[]
+     * @return \Paskel\Seo\Api\Data\HreflangInterface[]
      */
     public function getItems();
 
     /**
      * Set pages list.
      *
-     * @param \Seo\Hreflang\Api\Data\HreflangInterface[] $items
+     * @param \Paskel\Seo\Api\Data\HreflangInterface[] $items
      * @return $this
      */
     public function setItems(array $items);

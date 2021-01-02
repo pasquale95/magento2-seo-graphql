@@ -1,19 +1,19 @@
 type CmsPage {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang tags to insert in the <head> for the page.")
-        @resolver(class: "Seo\\Hreflang\\Model\\Resolver\\CmsPage\\Hreflang")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\Hreflang")
 }
 
 interface ProductInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the product.")
-        @resolver(class: "Seo\\Hreflang\\Model\\Resolver\\Product\\Hreflang")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\Hreflang")
 }
 
 interface CategoryInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the category.")
-        @resolver(class: "Seo\\Hreflang\\Model\\Resolver\\Category\\Hreflang")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\Hreflang")
 }
 
 type Hreflang @doc(description: "Hreflang object"){

@@ -7,10 +7,10 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model;
+namespace Paskel\Seo\Model\Hreflang;
 
 use Magento\Framework\Api\SearchResults;
-use Seo\Hreflang\Api\Data\HreflangSearchResultsInterface;
+use Paskel\Seo\Api\Data\HreflangSearchResultsInterface;
 
 /**
  * Service Data Object with Hreflang search results.

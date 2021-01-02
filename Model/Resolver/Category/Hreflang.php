@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model\Resolver\Category;
+namespace Paskel\Seo\Model\Resolver\Category;
 
 use Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -15,7 +15,7 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Seo\Hreflang\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class to resolve hreflang field in CategoryInterface GraphQL query

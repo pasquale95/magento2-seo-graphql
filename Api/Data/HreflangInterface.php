@@ -7,11 +7,11 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Api\Data;
+namespace Paskel\Seo\Api\Data;
 
 /**
  * Interface HreflangInterface
- * @package Seo\Hreflang\Api\Data
+ * @package Paskel\Seo\Api\Data
  */
 interface HreflangInterface
 {

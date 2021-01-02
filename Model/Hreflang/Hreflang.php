@@ -7,12 +7,16 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Model;
+namespace Paskel\Seo\Model\Hreflang;
 
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
-use Seo\Hreflang\Api\Data\HreflangInterface;
+use Paskel\Seo\Api\Data\HreflangInterface;
 
+/**
+ * Class Hreflang
+ * @package Paskel\Seo\Model\Hreflang
+ */
 class Hreflang extends AbstractModel implements IdentityInterface, HreflangInterface
 {
     /**
@@ -35,7 +39,7 @@ class Hreflang extends AbstractModel implements IdentityInterface, HreflangInter
      */
     protected function _construct()
     {
-        $this->_init('Seo\Hreflang\Model\ResourceModel\Hreflang');
+        $this->_init('Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang');
     }
 
     /**

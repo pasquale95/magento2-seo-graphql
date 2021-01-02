@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Api;
+namespace Paskel\Seo\Api;
 
 /**
  * Interface HreflangRepositoryInterface
@@ -18,32 +18,32 @@ namespace Seo\Hreflang\Api;
  * and XML responses, thus is a good practice to use the entire path in the
  * methods documentation inside API interfaces.
  *
- * @package Seo\Hreflang\Api
+ * @package Paskel\Seo\Api
  */
 interface HreflangRepositoryInterface
 {
     /**
      * @param int $id
-     * @return \Seo\Hreflang\Api\Data\HreflangInterface
+     * @return \Paskel\Seo\Api\Data\HreflangInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getById(int $id);
 
     /**
-     * @param \Seo\Hreflang\Api\Data\HreflangInterface $hreflang
-     * @return \Seo\Hreflang\Api\Data\HreflangInterface
+     * @param \Paskel\Seo\Api\Data\HreflangInterface $hreflang
+     * @return \Paskel\Seo\Api\Data\HreflangInterface
      */
-    public function save(\Seo\Hreflang\Api\Data\HreflangInterface $hreflang);
+    public function save(\Paskel\Seo\Api\Data\HreflangInterface $hreflang);
 
     /**
-     * @param \Seo\Hreflang\Api\Data\HreflangInterface $hreflang
+     * @param \Paskel\Seo\Api\Data\HreflangInterface $hreflang
      * @return void
      */
-    public function delete(\Seo\Hreflang\Api\Data\HreflangInterface $hreflang);
+    public function delete(\Paskel\Seo\Api\Data\HreflangInterface $hreflang);
 
     /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \Seo\Hreflang\Api\Data\HreflangSearchResultsInterface
+     * @return \Paskel\Seo\Api\Data\HreflangSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
 }

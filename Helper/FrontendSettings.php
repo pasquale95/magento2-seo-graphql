@@ -7,7 +7,7 @@
  * file 'LICENSE', which is part of this source code package.
  */
 
-namespace Seo\Hreflang\Helper;
+namespace Paskel\Seo\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
@@ -18,7 +18,7 @@ use Magento\Store\Model\StoreManagerInterface;
 /**
  * Class FrontendSettings
  *
- * @package Seo\Hreflang\Helper
+ * @package Paskel\Seo\Helper
  */
 class FrontendSettings extends AbstractHelper
 {
