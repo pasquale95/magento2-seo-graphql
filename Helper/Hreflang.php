@@ -72,6 +72,7 @@ class Hreflang extends AbstractHelper
      * @param $entityType
      * @param $storeId
      * @return HreflangInterface
+     * @throws LocalizedException
      */
     public function getStoreHreflang($entityId, $entityType, $storeId)
     {
