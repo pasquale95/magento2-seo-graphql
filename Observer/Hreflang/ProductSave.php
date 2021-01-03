@@ -19,9 +19,9 @@ use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class ProductSave
- * Trigger the creation/update of hreflang links inside hreflang table for a product entity.
- *
  * @package Paskel\Seo\Observer\Hreflang
+ *
+ * Trigger the creation/update of hreflang links inside hreflang table for a product entity.
  */
 class ProductSave implements ObserverInterface
 {

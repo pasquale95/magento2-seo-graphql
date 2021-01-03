@@ -28,8 +28,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  * Overwritten for a bug in the getUrl() function which
  * does not allow to get the product url with the category.
  *
- * @api
- * @since 100.0.2
+ * Class Url
+ * @package Paskel\Seo\Model\Product
  */
 class Url extends MagentoUrl
 {
@@ -89,9 +89,11 @@ class Url extends MagentoUrl
         $categoryIds = $product->getCategoryIds();
         $categoryId = null;
 
+        // START fix
         if (!isset($params['_ignore_category'])) {
             $categoryId = $categoryIds ? max($categoryIds) : null;
         }
+        // END fix
 
         if ($product->hasUrlDataObject()) {
             $requestPath = $product->getUrlDataObject()->getUrlRewrite();

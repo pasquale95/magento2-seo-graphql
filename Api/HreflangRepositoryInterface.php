@@ -11,14 +11,13 @@ namespace Paskel\Seo\Api;
 
 /**
  * Interface HreflangRepositoryInterface
+ * @package Paskel\Seo\Api
  *
- *                              !!!CAUTION!!!
+ *                              ---CAUTION---
  * Be careful to do not remove the full path for the params and return types.
  * The use statements are not parsed by the Magento framework to generate JSON
  * and XML responses, thus is a good practice to use the entire path in the
  * methods documentation inside API interfaces.
- *
- * @package Paskel\Seo\Api
  */
 interface HreflangRepositoryInterface
 {

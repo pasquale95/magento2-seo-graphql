@@ -23,6 +23,8 @@ use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 /**
  * Class SocialMarkup
  * @package Paskel\Seo\Model\Resolver\Product
+ *
+ * Class to resolve socialMarkup field in product GraphQL query.
  */
 class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
 {

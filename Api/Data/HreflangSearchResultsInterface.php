@@ -12,9 +12,8 @@ namespace Paskel\Seo\Api\Data;
 use Magento\Framework\Api\SearchResultsInterface;
 
 /**
- * Interface for hreflang search results.
- * @api
- * @since 100.0.2
+ * Interface HreflangSearchResultsInterface
+ * @package Paskel\Seo\Api\Data
  */
 interface HreflangSearchResultsInterface extends SearchResultsInterface
 {

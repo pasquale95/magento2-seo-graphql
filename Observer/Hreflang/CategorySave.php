@@ -19,9 +19,9 @@ use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class CategorySave
- * Trigger the creation/update of hreflang links inside hreflang table for a category entity.
- *
  * @package Paskel\Seo\Observer\Hreflang
+ *
+ * Trigger the creation/update of hreflang links inside hreflang table for a category entity.
  */
 class CategorySave implements ObserverInterface
 {

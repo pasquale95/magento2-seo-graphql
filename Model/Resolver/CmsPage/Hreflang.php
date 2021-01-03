@@ -19,7 +19,10 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
- * Class to resolve hreflang field in CmsPage GraphQL query
+ * Class Hreflang
+ * @package Paskel\Seo\Model\Resolver\CmsPage
+ *
+ * Class to resolve hreflang field in CmsPage GraphQL query.
  */
 class Hreflang implements ResolverInterface
 {

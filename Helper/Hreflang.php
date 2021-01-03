@@ -20,6 +20,10 @@ use Paskel\Seo\Helper\Url as Url;
 use Paskel\Seo\Model\Hreflang\HreflangFactory;
 use Paskel\Seo\Model\Hreflang\HreflangRepositoryFactory;
 
+/**
+ * Class Hreflang
+ * @package Paskel\Seo\Helper
+ */
 class Hreflang extends AbstractHelper
 {
     /**

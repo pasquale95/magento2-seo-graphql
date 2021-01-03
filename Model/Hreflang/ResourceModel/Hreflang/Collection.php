@@ -12,6 +12,10 @@ namespace Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Paskel\Seo\Api\Data\HreflangInterface;
 
+/**
+ * Class Collection
+ * @package Paskel\Seo\Model\Hreflang\ResourceModel\Hreflang
+ */
 class Collection extends AbstractCollection
 {
     /**

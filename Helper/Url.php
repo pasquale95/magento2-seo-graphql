@@ -17,6 +17,10 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
+/**
+ * Class Url
+ * @package Paskel\Seo\Helper
+ */
 class Url extends AbstractHelper
 {
     /**

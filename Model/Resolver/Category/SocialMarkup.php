@@ -21,9 +21,9 @@ use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
  * Class SocialMarkup:
- * resolve socialMarkup field in category GraphQL query
- *
  * @package Paskel\Seo\Model\Resolver\Category
+ *
+ * Class to resolve socialMarkup field in category GraphQL query.
  */
 class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
 {

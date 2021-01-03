@@ -18,7 +18,10 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
- * Class to resolve hreflang field in ProductInterface GraphQL query
+ * Class Hreflang
+ * @package Paskel\Seo\Model\Resolver\Product
+ *
+ * Class to resolve hreflang field in ProductInterface GraphQL query.
  */
 class Hreflang implements ResolverInterface
 {

@@ -22,6 +22,9 @@ use Magento\Config\Model\Config\Backend\Admin\Custom;
  */
 class Store extends AbstractHelper
 {
+    /**
+     * Constants used as keys inside the hreflang list.
+     */
     const HREFLANG = 'hreflang';
     const BASE_URL = 'baseUrl';
 
@@ -94,6 +97,7 @@ class Store extends AbstractHelper
 
     /**
      * Returns associative array of type ['storeId' => ['hreflang', 'baseUrl']]
+     *
      * @return array
      * @throws NoSuchEntityException
      */

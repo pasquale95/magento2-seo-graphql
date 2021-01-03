@@ -24,7 +24,10 @@ use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
- * Class to resolve socialMarkup field in cmsPage GraphQL query
+ * Class SocialMarkup
+ * @package Paskel\Seo\Model\Resolver\CmsPage
+ *
+ * Class to resolve socialMarkup field in cmsPage GraphQL query.
  */
 class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
 {

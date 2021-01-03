@@ -19,9 +19,9 @@ use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class CmsPageSave
- * Trigger the creation/update of hreflang links inside hreflang table for a page entity.
- *
  * @package Paskel\Seo\Observer\Hreflang
+ *
+ * Trigger the creation/update of hreflang links inside hreflang table for a page entity.
  */
 class CmsPageSave implements ObserverInterface
 {

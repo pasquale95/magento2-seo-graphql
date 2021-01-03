@@ -13,7 +13,8 @@ use Magento\Framework\Api\SearchResults;
 use Paskel\Seo\Api\Data\HreflangSearchResultsInterface;
 
 /**
- * Service Data Object with Hreflang search results.
+ * Class HreflangSearchResults
+ * @package Paskel\Seo\Model\Hreflang
  */
 class HreflangSearchResults extends SearchResults implements HreflangSearchResultsInterface
 {

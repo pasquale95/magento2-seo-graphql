@@ -17,7 +17,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class FrontendSettings
- *
  * @package Paskel\Seo\Helper
  */
 class FrontendSettings extends AbstractHelper

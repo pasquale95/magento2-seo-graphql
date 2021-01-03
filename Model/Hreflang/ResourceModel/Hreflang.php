@@ -9,11 +9,14 @@
 
 namespace Paskel\Seo\Model\Hreflang\ResourceModel;
 
-
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Paskel\Seo\Api\Data\HreflangInterface;
 
+/**
+ * Class Hreflang
+ * @package Paskel\Seo\Model\Hreflang\ResourceModel
+ */
 class Hreflang extends AbstractDb
 {
     /**
