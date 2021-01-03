@@ -54,6 +54,13 @@
                     <comment>Specify the hreflang code to use for the store view according to the ISO 639-1 (e.g. it-it).</comment>
                 </field>
             </group>
+            <group id="socialMarkup" translate="labeln" type="text" sortOrder="11" showInStore="1" showInDefault="1" showInWebsite="1">
+                <label>Social Markup Settings</label>
+                <field id="site_name" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Site name</label>
+                    <comment>Specify the name to use as content for the property "og:site_name".</comment>
+                </field>
+            </group>
         </section>
         <section id="web">
             <group id="frontend_settings" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">

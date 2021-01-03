@@ -62,7 +62,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add locale
         $this->setLocale($this->storeConfigDataProvider->getStoreConfigData($store)['locale']);
         // add site_name
-        $this->setSitename(self::SITENAME_VALUE);
+        $this->setSitenameByStore($store->getId());
         // add url
         $this->setUrl($this->retrieveUrl($product->getId(), ProductUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
         // add title

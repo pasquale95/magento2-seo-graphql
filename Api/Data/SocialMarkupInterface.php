@@ -43,7 +43,7 @@ interface SocialMarkupInterface
      * Constants for those values that don't change among the graphql calls
      */
     const TYPE_VALUE = "website";
-    const SITENAME_VALUE = "example"; //TODO: set config to insert website name
+    const SITENAME_VALUE = "example";
 
     /**
      * @param $type

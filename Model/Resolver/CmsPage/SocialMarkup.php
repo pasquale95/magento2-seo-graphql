@@ -21,6 +21,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
@@ -42,19 +43,22 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * @param PageRepositoryInterface $pageRepository
      * @param StoreConfigDataProvider $storeConfigsDataProvider
      * @param HreflangHelper $hreflangHelper
+     * @param SocialMarkupHelper $socialMarkupHelper
      * @param PlaceholderProvider $placeholderProvider
      */
     public function __construct(
         PageRepositoryInterface $pageRepository,
         StoreConfigDataProvider $storeConfigsDataProvider,
         HreflangHelper $hreflangHelper,
+        SocialMarkupHelper $socialMarkupHelper,
         PlaceholderProvider $placeholderProvider
     ) {
         $this->pageRepository = $pageRepository;
         parent::__construct(
             $storeConfigsDataProvider,
             $hreflangHelper,
-            $placeholderProvider
+            $placeholderProvider,
+            $socialMarkupHelper
         );
     }
 
@@ -87,7 +91,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add locale
         $this->setLocale($this->storeConfigDataProvider->getStoreConfigData($store)['locale']);
         // add site_name
-        $this->setSitename(self::SITENAME_VALUE);
+        $this->setSitenameByStore($store->getId());
         // add url
         $this->setUrl($this->retrieveUrl($value[PageInterface::IDENTIFIER], CmsPageUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
         // add title

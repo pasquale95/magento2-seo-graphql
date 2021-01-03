@@ -14,6 +14,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
 use Paskel\Seo\Api\Data\SocialMarkupInterface;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 
 /**
  * Class AbstractSocialMarkup
@@ -39,20 +40,28 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
     protected $placeholderProvider;
 
     /**
+     * @var SocialMarkupHelper
+     */
+    protected SocialMarkupHelper $socialMarkupHelper;
+
+    /**
      * AbstractSocialMarkup constructor.
      *
      * @param StoreConfigDataProvider $storeConfigsDataProvider
      * @param HreflangHelper $hreflangHelper
      * @param PlaceholderProvider $placeholderProvider
+     * @param SocialMarkupHelper $socialMarkupHelper
      */
     public function __construct(
         StoreConfigDataProvider $storeConfigsDataProvider,
         HreflangHelper $hreflangHelper,
-        PlaceholderProvider $placeholderProvider
+        PlaceholderProvider $placeholderProvider,
+        SocialMarkupHelper $socialMarkupHelper
     ) {
         $this->storeConfigDataProvider = $storeConfigsDataProvider;
-        $this->hreflangHelper = $hreflangHelper;
         $this->placeholderProvider = $placeholderProvider;
+        $this->hreflangHelper = $hreflangHelper;
+        $this->socialMarkupHelper = $socialMarkupHelper;
     }
 
     /**
@@ -119,6 +128,20 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
                     self::CONTENT => $content
                 ]
             );
+        }
+    }
+
+    /**
+     * Retrieve sitename from config options
+     *
+     * @param int|null $storeId
+     */
+    public function setSitenameByStore($storeId = null) {
+        $sitename = $this->socialMarkupHelper->getSitename($storeId);
+        if ($sitename) {
+            $this->setSitename($this->socialMarkupHelper->getSitename($storeId));
+        } else {
+            $this->setSitename(self::SITENAME_VALUE);
         }
     }
 
