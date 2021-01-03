@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+ /**
+  * @author: Pasquale Convertini <pasqualeconvertini95@gmail.com>
+  * @github: @Pasquale95
+  *
+  * This file is subject to the terms and conditions defined in
+  * file 'LICENSE', which is part of this source code package.
+  */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="seo" frontName="seo">
+            <module name="Paskel_Seo" />
+        </route>
+    </router>
+</config>

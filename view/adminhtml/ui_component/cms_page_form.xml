@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * @author: Pasquale Convertini <pasqualeconvertini95@gmail.com>
+  * @github: @Pasquale95
+  *
+  * This file is subject to the terms and conditions defined in
+  * file 'LICENSE', which is part of this source code package.
+  */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="search_engine_optimisation">
+        <field name="social_markup_image" sortOrder="80" formElement="imageUploader">
+            <settings>
+                <label translate="true">Social Markup image</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="seo/socialmarkup/imageupload"/>
+                            <param xsi:type="string" name="paramName">social_markup_image</param>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

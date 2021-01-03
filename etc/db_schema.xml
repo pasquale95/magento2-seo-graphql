@@ -10,6 +10,7 @@
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- HREFLANG -->
     <table name="hreflang" resource="default" engine="innodb" comment="Hreflang table">
         <column xsi:type="int" name="hreflang_id" unsigned="true" nullable="false" identity="true"
                 comment="Hreflang ID"/>
@@ -34,5 +35,9 @@
         <index referenceId="HREFLANG_ENTITY_ID" indexType="btree">
             <column name="entity_id"/>
         </index>
+    </table>
+    <!-- SOCIAL MARKUP -->
+    <table name="cms_page" resource="default" engine="innodb" comment="CMS Page Table">
+        <column xsi:type="varchar" name="social_markup_image" nullable="true" length="255" comment="Social Markup Image path"/>
     </table>
 </schema>

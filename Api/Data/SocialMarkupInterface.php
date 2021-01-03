@@ -34,6 +34,12 @@ interface SocialMarkupInterface
     const IMAGE = "og:image";
 
     /**
+     * Name for the db field where to store the
+     * image url.
+     */
+    const IMAGE_FIELD_DB = "social_markup_image";
+
+    /**
      * Constants for those values that don't change among the graphql calls
      */
     const TYPE_VALUE = "website";

@@ -21,4 +21,27 @@
     <preference type="Paskel\Seo\Model\Hreflang\HreflangRepository" for="Paskel\Seo\Api\HreflangRepositoryInterface"/>
     <preference type="Paskel\Seo\Model\Hreflang\Hreflang" for="Paskel\Seo\Api\Data\HreflangInterface"/>
     <preference type="Paskel\Seo\Model\Hreflang\HreflangSearchResults" for="Paskel\Seo\Api\Data\HreflangSearchResultsInterface"/>
+    <!-- SOCIAL MARKUP -->
+    <!-- To setup the input args for the image uploader constructor -->
+    <virtualType name="Paskel\Seo\Model\SocialMarkup\ImageUpload" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">seo/tmp/cmspage</argument>
+            <argument name="basePath" xsi:type="string">seo/cmspage</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Paskel\Seo\Controller\Adminhtml\SocialMarkup\ImageUpload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Paskel\Seo\Model\SocialMarkup\ImageUpload</argument>
+        </arguments>
+    </type>
+    <!-- To correctly render image preview -->
+    <type name="Magento\Cms\Model\Page\DataProvider">
+        <plugin name="imageUploaderFixer" type="Paskel\Seo\Plugin\SocialMarkup\ImageUploaderFixer"/>
+    </type>
 </config>
