@@ -19,10 +19,8 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\UrlInterface;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
-use Paskel\Seo\Helper\Url;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
@@ -94,7 +92,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add description
         $this->setDescription($value['meta_description'] ?? $page->getContentHeading());
         // add image, if any
-        $this->setImage($this->retrieveImage($page, $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
+        $this->setImage($this->retrieveImage($page));
 
         return $this->socialMarkups;
     }
@@ -104,13 +102,12 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * If not, use placeholder image.
      *
      * @param $page
-     * @param $storeUrl
      * @return string
      */
-    public function retrieveImage($page, $storeUrl) {
-        $imageUrl = $page->getPreviewImage();
+    public function retrieveImage($page) {
+        $imageUrl = $page->getSocialMarkupImage();
         if (isset($imageUrl) and !empty($imageUrl)) {
-            return Url::pinchUrl($storeUrl, $imageUrl);
+            return $imageUrl;
         } else {
             // return placeholder
             return $this->placeholderProvider->getPlaceholder("small_image");
