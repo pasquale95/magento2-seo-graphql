@@ -16,6 +16,7 @@
             <tab>catalog</tab>
             <resource>Paskel_Seo::hreflang</resource>
             <!-- HREFLANG -->
+            <!-- TODO: add x-default option -->
             <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Hreflang Settings</label>
                 <field id="category_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
@@ -51,7 +52,7 @@
                     <depends>
                         <field id="use_locale">0</field>
                     </depends>
-                    <comment>Specify the hreflang code to use for the store view according to the ISO 639-1 (e.g. it-it).</comment>
+                    <comment>If you do not find the hreflang combination in the option above, specify here your custom hreflang code (e.g. en-eu).</comment>
                 </field>
             </group>
             <group id="socialMarkup" translate="labeln" type="text" sortOrder="11" showInStore="1" showInDefault="1" showInWebsite="1">
