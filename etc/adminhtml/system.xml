@@ -60,6 +60,11 @@
                     <label>Site name</label>
                     <comment>Specify the name to use as content for the property "og:site_name".</comment>
                 </field>
+                <field id="hide_unset_properties_graphql" translate="label" type="select" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Hide unset properties in GraphQL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you want to add the unset options in the graphQL.</comment>
+                </field>
             </group>
         </section>
         <section id="web">

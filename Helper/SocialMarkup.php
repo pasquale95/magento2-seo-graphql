@@ -32,4 +32,16 @@ class SocialMarkup extends AbstractHelper
             $storeId
         );
     }
+
+    /**
+     * Retrieve option value
+     *
+     * @return mixed
+     */
+    public function hideUnsetPropertiesInGraphQl()
+    {
+        return $this->scopeConfig->getValue(
+            'seo/socialMarkup/hide_unset_properties_graphql'
+        );
+    }
 }

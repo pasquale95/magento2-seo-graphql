@@ -118,10 +118,9 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
      *
      * @param $property
      * @param $content
-     * TODO: add config to set/unset null values in graphql
      */
     public function wrapSocialMarkup($property, $content) {
-        if ($content != null) {
+        if (!($this->socialMarkupHelper->hideUnsetPropertiesInGraphQl() and $content == null)) {
             array_push($this->socialMarkups,
                 [
                     self::PROPERTY => $property,
