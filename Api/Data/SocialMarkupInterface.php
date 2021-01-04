@@ -40,6 +40,11 @@ interface SocialMarkupInterface
     const IMAGE_FIELD_DB = "social_markup_image";
 
     /**
+     * Relative path where placeholder images are stored.
+     */
+    const PLACEHOLDER_FOLDER = "seo/socialMarkup/placeholder";
+
+    /**
      * Constants for those values that don't change among the graphql calls
      */
     const TYPE_VALUE = "website";

@@ -57,14 +57,32 @@
             </group>
             <group id="socialMarkup" translate="labeln" type="text" sortOrder="11" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Social Markup Settings</label>
-                <field id="site_name" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Site name</label>
-                    <comment>Specify the name to use as content for the property "og:site_name".</comment>
-                </field>
                 <field id="hide_unset_properties_graphql" translate="label" type="select" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Hide unset properties in GraphQL</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set to yes if you want to add the unset options in the graphQL.</comment>
+                </field>
+                <field id="site_name" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Site name</label>
+                    <comment>Specify the name to use as content for the property "og:site_name".</comment>
+                </field>
+                <field id="product_placeholder" type="image" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Image Placeholder</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
+                    <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
+                </field>
+                <field id="category_placeholder" type="image" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Image Placeholder</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
+                    <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
+                </field>
+                <field id="cms_page_placeholder" type="image" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>CMS Page Image Placeholder</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
+                    <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
                 </field>
             </group>
         </section>

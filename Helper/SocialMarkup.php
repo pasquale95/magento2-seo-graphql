@@ -19,7 +19,7 @@ use Magento\Store\Model\ScopeInterface;
 class SocialMarkup extends AbstractHelper
 {
     /**
-     * Retrieve option value
+     * Retrieve site name.
      *
      * @param null $storeId
      * @return mixed
@@ -34,7 +34,7 @@ class SocialMarkup extends AbstractHelper
     }
 
     /**
-     * Retrieve option value
+     * Retrieve unset properties option.
      *
      * @return mixed
      */
@@ -42,6 +42,22 @@ class SocialMarkup extends AbstractHelper
     {
         return $this->scopeConfig->getValue(
             'seo/socialMarkup/hide_unset_properties_graphql'
+        );
+    }
+
+    /**
+     * Retrieve entity image placeholder.
+     *
+     * @param $entityType
+     * @param int|null $storeId
+     * @return mixed
+     */
+    public function getImagePlaceholder($entityType, $storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            'seo/socialMarkup/' . str_replace("-", "_", $entityType) . '_placeholder',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
         );
     }
 }

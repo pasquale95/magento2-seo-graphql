@@ -16,7 +16,9 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\UrlInterface;
 use Paskel\Seo\Helper\Url;
+use Paskel\Seo\Helper\Url as UrlHelper;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
@@ -69,7 +71,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add description
         $this->setDescription($category->getMetaDescription() ?? $category->getDescription());
         // add image, if any
-        $this->setImage($this->retrieveImage($category, $store->getBaseUrl()));
+        $this->setImage($this->retrieveImage($category, $store->getId(), $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
 
         return $this->socialMarkups;
     }
@@ -79,16 +81,24 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * If not, use placeholder image.
      *
      * @param $category
+     * @param $storeId
      * @param $storeUrl
      * @return string
      */
-    public function retrieveImage($category, $storeUrl) {
+    public function retrieveImage($category, $storeId, $storeUrl) {
+        // TODO: fix adding category repo and retrieve the image correctly
         $imageUrl = $category->getImage();
         if (isset($imageUrl) and !empty($imageUrl)) {
             return Url::pinchUrl($storeUrl . 'catalog/category', $imageUrl);
         } else {
             // return placeholder
-            return $this->placeholderProvider->getPlaceholder("small_image");
+            return UrlHelper::pinchUrl(
+                $storeUrl . self::PLACEHOLDER_FOLDER,
+                $this->socialMarkupHelper->getImagePlaceholder(
+                    CategoryUrlRewriteGenerator::ENTITY_TYPE,
+                    $storeId
+                )
+            );
         }
     }
 }

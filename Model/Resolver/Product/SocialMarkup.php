@@ -18,6 +18,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\UrlInterface;
 use Paskel\Seo\Helper\Url;
+use Paskel\Seo\Helper\Url as UrlHelper;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
 /**
@@ -70,7 +71,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add description
         $this->setDescription($product->getMetaDescription() ?? $product->getDescription());
         // add image, if any
-        $this->setImage($this->retrieveImage($product, $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
+        $this->setImage($this->retrieveImage($product, $store->getId(), $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
 
         return $this->socialMarkups;
     }
@@ -80,16 +81,24 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * If not, use placeholder image.
      *
      * @param $product
+     * @param $storeId
      * @param $storeUrl
      * @return string
      */
-    public function retrieveImage($product, $storeUrl) {
+    public function retrieveImage($product, $storeId, $storeUrl) {
+        // TODO: fix adding product repo and retrieve the image correctly
         $imageUrl = $product->getImage();
         if (isset($imageUrl) and !empty($imageUrl)) {
             return Url::pinchUrl($storeUrl . 'catalog/product', $imageUrl);
         } else {
             // return placeholder
-            return $this->placeholderProvider->getPlaceholder("small_image");
+            return UrlHelper::pinchUrl(
+                $storeUrl . self::PLACEHOLDER_FOLDER,
+                $this->socialMarkupHelper->getImagePlaceholder(
+                    ProductUrlRewriteGenerator::ENTITY_TYPE,
+                    $storeId
+                )
+            );
         }
     }
 }
