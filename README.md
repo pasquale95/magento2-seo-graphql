@@ -1,2 +1,3 @@
-# magento2-pwa-hreflang
-A module for Magento2 to add the hreflang tag in page, category and product graphql declarations.
+# magento2-pwa-seo
+
+A module for Magento2 to add SEO functionalities to Magento.
