@@ -101,33 +101,35 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add description
         $this->setDescription($value['meta_description'] ?? $page->getContentHeading());
         // add image, if any
-        $this->setImage($this->retrieveImage($page, $store->getId(), $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
+        $this->setImage($this->retrieveImage($page, $store));
 
         return $this->socialMarkups;
     }
 
     /**
-     * Retrieve category image url.
+     * Retrieve cms page image url.
      * If not, use placeholder image.
      *
      * @param $page
-     * @param $storeId
-     * @param $storeUrl
-     * @return string
+     * @param $store
+     * @return string|null
      */
-    public function retrieveImage($page, $storeId, $storeUrl) {
+    public function retrieveImage($page, $store) {
+        // retrieve store info
+        $storeId = $store->getId();
+        $storeUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+
         $imageUrl = $page->getSocialMarkupImage();
-        if (isset($imageUrl) and !empty($imageUrl)) {
-            return $imageUrl;
-        } else {
-            // return placeholder
-            return UrlHelper::pinchUrl(
-                $storeUrl . self::PLACEHOLDER_FOLDER,
-                $this->socialMarkupHelper->getImagePlaceholder(
-                    CmsPageUrlRewriteGenerator::ENTITY_TYPE,
-                    $storeId
-                )
+        if (!$imageUrl) {
+            $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
+                CmsPageUrlRewriteGenerator::ENTITY_TYPE,
+                $storeId
             );
+            if (isset($imageUrl) and !empty($imageUrl)) {
+                // return placeholder
+                $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
+            }
         }
+        return $imageUrl ?? null;
     }
 }

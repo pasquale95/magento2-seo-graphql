@@ -9,15 +9,20 @@
 
 namespace Paskel\Seo\Model\Resolver\Category;
 
+use Magento\Catalog\Model\CategoryRepositoryFactory;
+use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\UrlInterface;
-use Paskel\Seo\Helper\Url;
+use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
+use Paskel\Seo\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Helper\Url as UrlHelper;
 use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
 
@@ -29,6 +34,36 @@ use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
  */
 class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
 {
+    /**
+     * @var CategoryRepositoryFactory
+     */
+    protected CategoryRepositoryFactory $categoryRepositoryFactory;
+
+    /**
+     * Category resolver constructor.
+     *
+     * @param CategoryRepositoryFactory $categoryRepositoryFactory
+     * @param StoreConfigDataProvider $storeConfigsDataProvider
+     * @param HreflangHelper $hreflangHelper
+     * @param SocialMarkupHelper $socialMarkupHelper
+     * @param PlaceholderProvider $placeholderProvider
+     */
+    public function __construct(
+        CategoryRepositoryFactory $categoryRepositoryFactory,
+        StoreConfigDataProvider $storeConfigsDataProvider,
+        HreflangHelper $hreflangHelper,
+        SocialMarkupHelper $socialMarkupHelper,
+        PlaceholderProvider $placeholderProvider
+    ) {
+        $this->categoryRepositoryFactory = $categoryRepositoryFactory;
+        parent::__construct(
+            $storeConfigsDataProvider,
+            $hreflangHelper,
+            $placeholderProvider,
+            $socialMarkupHelper
+        );
+    }
+
     /**
      * Fetches the data from persistence models and format it according to the GraphQL schema.
      *
@@ -71,7 +106,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add description
         $this->setDescription($category->getMetaDescription() ?? $category->getDescription());
         // add image, if any
-        $this->setImage($this->retrieveImage($category, $store->getId(), $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)));
+        $this->setImage($this->retrieveImage($category->getId(), $store));
 
         return $this->socialMarkups;
     }
@@ -80,25 +115,35 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * Retrieve category image url.
      * If not, use placeholder image.
      *
-     * @param $category
-     * @param $storeId
-     * @param $storeUrl
+     * @param $categoryId
+     * @param $store
      * @return string
+     * @throws NoSuchEntityException
      */
-    public function retrieveImage($category, $storeId, $storeUrl) {
-        // TODO: fix adding category repo and retrieve the image correctly
+    public function retrieveImage($categoryId, $store) {
+        // TODO: add twitter cards
+        // retrieve store info
+        $storeId = $store->getId();
+        // factory made necessary to get the image url, if any
+        $categoryRepository = $this->categoryRepositoryFactory->create();
+        $category = $categoryRepository->get($categoryId, $storeId);
+
         $imageUrl = $category->getImage();
         if (isset($imageUrl) and !empty($imageUrl)) {
-            return Url::pinchUrl($storeUrl . 'catalog/category', $imageUrl);
+            $imageUrl = UrlHelper::pinchUrl($store->getBaseUrl(), $imageUrl);
         } else {
-            // return placeholder
-            return UrlHelper::pinchUrl(
-                $storeUrl . self::PLACEHOLDER_FOLDER,
-                $this->socialMarkupHelper->getImagePlaceholder(
-                    CategoryUrlRewriteGenerator::ENTITY_TYPE,
-                    $storeId
-                )
+            $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
+                CategoryUrlRewriteGenerator::ENTITY_TYPE,
+                $storeId
             );
+            if (isset($imageUrl) and !empty($imageUrl)) {
+                // return placeholder
+                $imageUrl = UrlHelper::pinchUrl(
+                    $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::PLACEHOLDER_FOLDER,
+                    $imageUrl
+                );
+            }
         }
+        return $imageUrl ?? null;
     }
 }
