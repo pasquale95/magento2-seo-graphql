@@ -16,30 +16,35 @@
             <tab>catalog</tab>
             <resource>Paskel_Seo::hreflang</resource>
             <!-- HREFLANG -->
-            <!-- TODO: add x-default option -->
+            <!-- TODO: make hreflang update be automated at save config click -->
             <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Hreflang Settings</label>
-                <field id="category_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="x_default_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1">
+                    <label>Default Store</label>
+                    <source_model>Paskel\Seo\Model\Config\Source\Store</source_model>
+                    <comment>Choose the default store whose hreflang would be defined as x-default.</comment>
+                </field>
+                <field id="category_hreflang" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Hreflang for Category</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable hreflang completion for categories.</comment>
                 </field>
-                <field id="product_hreflang" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="product_hreflang" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Hreflang for Product</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable hreflang completion for products.</comment>
                 </field>
-                <field id="cms_page_hreflang" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="cms_page_hreflang" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Hreflang for Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable hreflang completion for cms pages.</comment>
                 </field>
-                <field id="use_locale" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="use_locale" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Use Locale for Hreflang</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set to yes if the store language is the same defined as locale.</comment>
                 </field>
-                <field id="hreflang_lang" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="hreflang_lang" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Hreflang Language</label>
                     <source_model>Magento\Config\Model\Config\Source\Locale</source_model>
                     <depends>
@@ -47,7 +52,8 @@
                     </depends>
                     <comment>Choose the language and country to use as hreflang code. If the requested option is not available, add the code in the option below.</comment>
                 </field>
-                <field id="custom_hreflang" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <!-- TODO: change custom hreflang to table with 2 columns: language and country -->
+                <field id="custom_hreflang" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Hreflang Custom Code</label>
                     <depends>
                         <field id="use_locale">0</field>
@@ -57,7 +63,7 @@
             </group>
             <group id="socialMarkup" translate="labeln" type="text" sortOrder="11" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Social Markup Settings</label>
-                <field id="hide_unset_properties_graphql" translate="label" type="select" sortOrder="10" showInDefault="1" canRestore="1">
+                <field id="hide_unset_properties_graphql" translate="label" type="select" sortOrder="10" showInDefault="1">
                     <label>Hide unset properties in GraphQL</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set to yes if you want to add the unset options in the graphQL.</comment>

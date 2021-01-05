@@ -52,6 +52,11 @@ interface HreflangInterface
     const URL = "url";
 
     /**
+     * X-default code
+     */
+    const X_DEFAULT = "x-default";
+
+    /**
      * Get Hreflang id
      *
      * @return int

@@ -15,6 +15,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Config\Model\Config\Backend\Admin\Custom;
+use Paskel\Seo\Api\Data\HreflangInterface;
 
 /**
  * Class Store
@@ -62,6 +63,15 @@ class Store extends AbstractHelper
      */
     public function getHreflang($storeId = null) {
         $code = null;
+
+        $xDefaultStoreId = $this->scopeConfig->getValue(
+            'seo/hreflang/x_default_hreflang'
+        );
+
+        // return x-default as hreflang for x-default store
+        if ($storeId == $xDefaultStoreId) {
+            return HreflangInterface::X_DEFAULT;
+        }
 
         $useLocale = $this->scopeConfig->getValue(
             'seo/hreflang/use_locale',
