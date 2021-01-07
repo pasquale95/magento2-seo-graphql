@@ -123,7 +123,7 @@ The response payload has the following layout:
 }
 ```
 
-Use these pieces of information to build at frontend the html hreflang tags and add them in the `<head> ` tag:
+Use these pieces of information to build at frontend the html hreflang tags and add them in the `<head>` tag:
 
 ```html
 <head>
@@ -206,7 +206,7 @@ The response payload has the following layout:
 }
 ```
 
-Use these pieces of information to build at frontend the html social share tags and add them in the `<head> ` tag:
+Use these pieces of information to build at frontend the html social share tags and add them in the `<head>` tag:
 
 ```html
 <head>
