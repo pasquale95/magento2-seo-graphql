@@ -102,9 +102,11 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add url
         $this->setUrl($this->retrieveUrl($category->getId(), CategoryUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
         // add title
-        $this->setTitle($category->getMetaTitle() ?? $category->getName());
+        $this->setTitle(!empty($category->getMetaTitle()) ?
+            $category->getMetaTitle() : $category->getName());
         // add description
-        $this->setDescription($category->getMetaDescription() ?? $category->getDescription());
+        $this->setDescription(!empty($category->getMetaDescription()) ?
+            $category->getMetaDescription() : $category->getDescription());
         // add image, if any
         $this->setImage($this->retrieveImage($category->getId(), $store));
 
@@ -129,14 +131,14 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         $category = $categoryRepository->get($categoryId, $storeId);
 
         $imageUrl = $category->getImage();
-        if (isset($imageUrl) and !empty($imageUrl)) {
+        if (!empty($imageUrl)) {
             $imageUrl = UrlHelper::pinchUrl($store->getBaseUrl(), $imageUrl);
         } else {
             $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
                 CategoryUrlRewriteGenerator::ENTITY_TYPE,
                 $storeId
             );
-            if (isset($imageUrl) and !empty($imageUrl)) {
+            if (!empty($imageUrl)) {
                 // return placeholder
                 $imageUrl = UrlHelper::pinchUrl(
                     $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::PLACEHOLDER_FOLDER,
