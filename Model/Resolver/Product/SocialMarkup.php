@@ -102,9 +102,11 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add url
         $this->setUrl($this->retrieveUrl($product->getId(), ProductUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
         // add title
-        $this->setTitle($product->getMetaTitle() ?? $product->getName());
+        $this->setTitle(!empty($product->getMetaTitle()) ?
+            $product->getMetaTitle() : $product->getName());
         // add description
-        $this->setDescription($product->getMetaDescription() ?? $product->getDescription());
+        $this->setDescription(!empty($product->getMetaDescription()) ?
+            $product->getMetaDescription() : $product->getDescription());
         // add image, if any
         $this->setImage($this->retrieveImage($product->getId(), $store));
 
@@ -130,14 +132,14 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         $product = $productFactory->getById($productId);
 
         $imageUrl = $product->getImage();
-        if (isset($imageUrl) and !empty($imageUrl)) {
+        if (!empty($imageUrl)) {
             $imageUrl = UrlHelper::pinchUrl($storeUrl . 'catalog/product', $imageUrl);
         } else {
             $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
                 ProductUrlRewriteGenerator::ENTITY_TYPE,
                 $storeId
             );
-            if (isset($imageUrl) and !empty($imageUrl)) {
+            if (!empty($imageUrl)) {
                 // return placeholder
                 $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
             }

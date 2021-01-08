@@ -97,10 +97,11 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         // add url
         $this->setUrl($this->retrieveUrl($value[PageInterface::IDENTIFIER], CmsPageUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
         // add title
-        // TODO: fix why if not meta title is set, it returns nothing
-        $this->setTitle($value['meta_title'] ?? $page->getTitle());
+        $this->setTitle(!empty($value['meta_title']) ?
+            $value['meta_title'] : $page->getTitle());
         // add description
-        $this->setDescription($value['meta_description'] ?? $page->getContentHeading());
+        $this->setDescription(!empty($value['meta_description']) ?
+            $value['meta_description'] : $page->getContentHeading());
         // add image, if any
         $this->setImage($this->retrieveImage($page, $store));
 
@@ -126,7 +127,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
                 CmsPageUrlRewriteGenerator::ENTITY_TYPE,
                 $storeId
             );
-            if (isset($imageUrl) and !empty($imageUrl)) {
+            if (!empty($imageUrl)) {
                 // return placeholder
                 $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
             }
