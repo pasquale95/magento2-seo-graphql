@@ -56,8 +56,14 @@
                     <comment>Choose the language and country to use as hreflang code. If the requested option is not available, add the code in the option below.</comment>
                 </field>
                 <!-- TODO: change custom hreflang to table with 2 columns: language and country -->
-                <field id="custom_hreflang" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <!--<field id="custom_hreflang" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Hreflang Custom Code</label>
+
+                </field>-->
+                <field id="custom_hreflang" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hreflang Custom Code</label>
+                    <frontend_model>Paskel\Seo\Block\Adminhtml\System\Config\Form\Field\CustomHreflang</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <depends>
                         <field id="use_locale">0</field>
                     </depends>
