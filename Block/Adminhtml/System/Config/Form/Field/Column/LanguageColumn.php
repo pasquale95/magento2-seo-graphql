@@ -82,15 +82,35 @@ class LanguageColumn extends Select
     private function getSourceOptions()
     {
         $locales = $this->optionsProvider->toOptionArray();
-        // TODO: continue changes here
         $languages = [];
-        //foreach ($locales as $locale) {
-        //    $label = preg_replace($locale['label']);
-        //    $value = $locale['value'];
-        //    if (!array_key_exists($value,$languages)) {
-//
-        //    }
-        //}
-        return $locales;
+        foreach ($locales as $locale) {
+            $value = $this->removeCountryCode($locale['value']);
+            $label = $this->removeCountryName($locale['label']);
+            if (!array_key_exists($value,$languages)) {
+                $languages[$value] = $label;
+            }
+        }
+        return $languages;
+    }
+
+    /**
+     * Removes the ending part of the locale, which corresponds
+     * to the country code.
+     *
+     * @param $value
+     * @return string
+     */
+    protected function removeCountryCode($value) {
+        return preg_replace("/_.*$/", "", $value);
+    }
+
+    /**
+     * Removes the countries between round brackets.
+     *
+     * @param $value
+     * @return string
+     */
+    protected function removeCountryName($value) {
+        return preg_replace("/\(.*\)/", "", $value);
     }
 }

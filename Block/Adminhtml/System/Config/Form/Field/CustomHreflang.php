@@ -81,6 +81,7 @@ class CustomHreflang extends AbstractFieldArray
             $optionHash = $this->getLanguageRenderer()->calcOptionHash($row->getData(self::LANGUAGE_COLUMN));
             $options['option_' . $optionHash] = 'selected="selected"';
         }
+        $this->_addButtonLabel = __('Addaa');
 
         $row->setData('option_extra_attrs', $options);
     }
