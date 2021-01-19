@@ -10,6 +10,8 @@
 namespace Paskel\Seo\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\ScopeInterface;
 
 /**
@@ -18,6 +20,25 @@ use Magento\Store\Model\ScopeInterface;
  */
 class SocialMarkup extends AbstractHelper
 {
+    /**
+     * @var Hreflang
+     */
+    protected Hreflang $hreflangHelper;
+
+    /**
+     * SocialMarkup constructor.
+     *
+     * @param Context $context
+     * @param Hreflang $hreflangHelper
+     */
+    public function __construct(
+        Context $context,
+        Hreflang $hreflangHelper
+    ) {
+        $this->hreflangHelper = $hreflangHelper;
+        parent::__construct($context);
+    }
+
     /**
      * Retrieve site name.
      *
@@ -59,5 +80,27 @@ class SocialMarkup extends AbstractHelper
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    /**
+     * Retrieve full url using hreflang table.
+     *
+     * @param $entityId
+     * @param $entityType
+     * @param $storeId
+     * @return string|null
+     */
+    public function retrieveUrl($entityId, $entityType, $storeId) {
+        try {
+            $hreflang = $this->hreflangHelper->getStoreHreflang(
+                $entityId,
+                $entityType,
+                $storeId
+            );
+            return $hreflang->getUrl();
+        }
+        catch (LocalizedException $e) {
+            return null;
+        }
     }
 }
