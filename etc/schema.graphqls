@@ -2,7 +2,7 @@ type CmsPage {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang tags to insert in the <head> for the page.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\Hreflang")
-    socialMarkup: [SocialMarkup]
+    socialMarkup: SocialMarkup
         @doc(description: "Returns the social markup properties to insert in the <head> for the page.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\SocialMarkup")
 }
@@ -20,7 +20,7 @@ interface CategoryInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the category.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\Hreflang")
-    socialMarkup: [SocialMarkup]
+    socialMarkup: SocialMarkup
         @doc(description: "Returns the social markup properties to insert in the <head> for the category.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\SocialMarkup")
 }
@@ -32,9 +32,23 @@ type Hreflang @doc(description: "Hreflang object"){
         @doc(description: "The href url.")
 }
 
-type SocialMarkup @doc(description: "Property field with its content."){
+type SocialMarkup {
+    openGraph: [OpenGraph]
+        @doc(description: "Open graph meta tags array")
+    twitterCard: [TwitterCard]
+        @doc(description: "Twitter card meta tags array")
+}
+
+type OpenGraph @doc(description: "Open graph meta tag contents."){
     property: String
-        @doc(description: "The meta property.")
+        @doc(description: "The meta tag property.")
     content: String
-        @doc(description: "The meta content.")
+        @doc(description: "The meta tag content.")
+}
+
+type TwitterCard @doc(description: "Twitter card meta tag contents."){
+    name: String
+        @doc(description: "The meta tag name.")
+    content: String
+        @doc(description: "The meta tag content.")
 }
