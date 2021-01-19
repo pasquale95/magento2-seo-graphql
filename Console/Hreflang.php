@@ -110,6 +110,20 @@ class Hreflang extends Command
     }
 
     /**
+     * Generates all Hreflang at once.
+     *
+     * @throws LocalizedException
+     */
+    public function generateHreflangs() {
+        // generate for categories
+        $this->generateCategoriesHreflang();
+        // generate for products
+        $this->generateProductsHreflang();
+        // generate for cms pages
+        $this->generateCmsPagesHreflang();
+    }
+
+    /**
      * Generate the hreflang attributes for all the categories
      *
      * @throws LocalizedException
