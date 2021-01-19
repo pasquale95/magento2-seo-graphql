@@ -19,7 +19,6 @@
             <tab>paskel</tab>
             <resource>Paskel_Seo::hreflang</resource>
             <!-- HREFLANG -->
-            <!-- TODO: make hreflang update be automated at save config click -->
             <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Hreflang Settings</label>
                 <field id="x_default_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1">
