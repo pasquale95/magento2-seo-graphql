@@ -5,6 +5,9 @@ type CmsPage {
     socialMarkup: SocialMarkup
         @doc(description: "Returns the social markup properties to insert in the <head> for the page.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\SocialMarkup")
+    schemaOrg: [SchemaOrg]
+        @doc(description: "Returns the schemaOrg script to add inside the html page.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\CmsPage\\SchemaOrg")
 }
 
 interface ProductInterface {
@@ -51,4 +54,11 @@ type TwitterCard @doc(description: "Twitter card meta tag contents."){
         @doc(description: "The meta tag name.")
     content: String
         @doc(description: "The meta tag content.")
+}
+
+type SchemaOrg {
+    schemaType: String
+        @doc(description: "schemaOrg type.")
+    script: String
+        @doc(description: "schemaOrg JSON-LD script to add in page.")
 }

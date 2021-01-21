@@ -17,9 +17,23 @@
         <section id="seo" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>SEO</label>
             <tab>paskel</tab>
-            <resource>Paskel_Seo::hreflang</resource>
+            <resource>Paskel_Seo::seo_config</resource>
+            <!-- GENERAL -->
+            <group id="general" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
+                <label>General Settings</label>
+                <field id="site_name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Website name</label>
+                    <comment>Specify the website name to use for social share and rich snippets.</comment>
+                </field>
+                <field id="website_logo" type="image" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Website logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">seo/general/logo</upload_dir>
+                    <base_url type="media" scope_info="1">seo/general/logo</base_url>
+                </field>
+            </group>
             <!-- HREFLANG -->
-            <group id="hreflang" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
+            <group id="hreflang" translate="label" type="text" sortOrder="20" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Hreflang Settings</label>
                 <field id="x_default_hreflang" translate="label" type="select" sortOrder="1" showInDefault="1">
                     <label>Default Store</label>
@@ -66,16 +80,12 @@
             </group>
             <!-- SOCIAL MARKUP -->
             <!-- TODO: add option to enable/disable opengraph and twitter cards -->
-            <group id="socialMarkup" translate="labeln" type="text" sortOrder="11" showInStore="1" showInDefault="1" showInWebsite="1">
+            <group id="socialMarkup" translate="label" type="text" sortOrder="30" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Social Markup Settings</label>
                 <field id="hide_unset_properties_graphql" translate="label" type="select" sortOrder="10" showInDefault="1">
                     <label>Hide unset properties in GraphQL</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set to yes if you want to add the unset options in the graphQL.</comment>
-                </field>
-                <field id="site_name" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Site name</label>
-                    <comment>Specify the name to use as content for the property "og:site_name".</comment>
                 </field>
                 <field id="product_placeholder" type="image" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product Image Placeholder</label>
@@ -94,6 +104,25 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
                     <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
+                </field>
+            </group>
+            <!-- SCHEMA ORG -->
+            <!-- TODO: add buttons to enable schema org types -->
+            <group id="schemaOrg" translate="label" type="text" sortOrder="40" showInStore="1" showInDefault="1" showInWebsite="1">
+                <label>Schema.org</label>
+                <field id="organization_name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Organization name</label>
+                    <comment>Specify the organization name.</comment>
+                </field>
+                <field id="organization_url" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Organization Url</label>
+                    <comment>Specify the organization url.</comment>
+                </field>
+                <field id="reference_links" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Reference Links</label>
+                    <frontend_model>Paskel\Seo\Block\Adminhtml\System\Config\Form\Field\SocialLinks</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>List of links to social pages connected to the organization/website.</comment>
                 </field>
             </group>
         </section>
