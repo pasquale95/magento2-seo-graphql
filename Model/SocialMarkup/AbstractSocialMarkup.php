@@ -48,6 +48,7 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
      * @var SocialMarkupHelper
      */
     protected SocialMarkupHelper $socialMarkupHelper;
+
     /**
      * AbstractSocialMarkup constructor.
      *

@@ -48,7 +48,7 @@ class SocialMarkup extends AbstractHelper
     public function getSitename($storeId = null)
     {
         return $this->scopeConfig->getValue(
-            'seo/socialMarkup/site_name',
+            'seo/general/site_name',
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
