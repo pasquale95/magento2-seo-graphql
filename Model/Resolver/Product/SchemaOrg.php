@@ -9,10 +9,12 @@
 
 namespace Paskel\Seo\Model\Resolver\Product;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Paskel\Seo\Model\SchemaOrg\Organization;
+use Paskel\Seo\Model\SchemaOrg\Product;
 use Paskel\Seo\Model\SchemaOrg\Website;
 
 /**
@@ -32,17 +34,25 @@ class SchemaOrg implements ResolverInterface
     protected Website $websiteSchema;
 
     /**
+     * @var Product
+     */
+    protected Product $productSchema;
+
+    /**
      * SchemaOrg constructor.
      *
      * @param Organization $organizationSchema
      * @param Website $websiteSchema
+     * @param Product $productSchema
      */
     public function __construct(
         Organization $organizationSchema,
-        Website $websiteSchema
+        Website $websiteSchema,
+        Product $productSchema
     ) {
         $this->organizationSchema = $organizationSchema;
         $this->websiteSchema = $websiteSchema;
+        $this->productSchema = $productSchema;
     }
 
     /**
@@ -55,6 +65,13 @@ class SchemaOrg implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        // Raise exception if no product model in the request
+        if (!isset($value['model'])) {
+            throw new LocalizedException(__('"model" value should be specified'));
+        }
+        // retrieve product
+        $product = $value['model'];
+
         return [
             [
                 'schemaType' => $this->organizationSchema->getType(),
@@ -63,6 +80,10 @@ class SchemaOrg implements ResolverInterface
             [
                 'schemaType' => $this->websiteSchema->getType(),
                 'script' => $this->websiteSchema->getScript()
+            ],
+            [
+                'schemaType' => $this->productSchema->getType(),
+                'script' => $this->productSchema->getScript($product->getId())
             ]
         ];
     }
