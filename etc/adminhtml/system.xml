@@ -21,11 +21,24 @@
             <!-- GENERAL -->
             <group id="general" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>General Settings</label>
-                <field id="site_name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="use_pwa_frontend" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Frontend PWA</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you are using the PWA technology and a separated server for the frontend.</comment>
+                </field>
+                <field id="frontend_url" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Frontend URL</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Baseurl</backend_model>
+                    <comment>Specify the domain at with the PWA frontend is reachable e.g. http://0.0.0.0:1000/</comment>
+                    <depends>
+                        <field id="seo/general/use_pwa_frontend">1</field>
+                    </depends>
+                </field>
+                <field id="site_name" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Website name</label>
                     <comment>Specify the website name to use for social share and rich snippets.</comment>
                 </field>
-                <field id="website_logo" type="image" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="website_logo" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Website logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">seo/general/logo</upload_dir>
@@ -107,41 +120,45 @@
                 </field>
             </group>
             <!-- SCHEMA ORG -->
-            <!-- TODO: add buttons to enable schema org types -->
             <group id="schemaOrg" translate="label" type="text" sortOrder="40" showInStore="1" showInDefault="1" showInWebsite="1">
                 <label>Schema.org</label>
+                <field id="enable_organization" translate="label" type="select" sortOrder="5" showInDefault="1">
+                    <label>Enable Organization Schema</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you want to add organization schema.org (https://schema.org/Organization).</comment>
+                </field>
                 <field id="organization_name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Organization name</label>
                     <comment>Specify the organization name.</comment>
+                    <depends>
+                        <field id="enable_organization">1</field>
+                    </depends>
                 </field>
                 <field id="organization_url" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Organization Url</label>
                     <comment>Specify the organization url.</comment>
+                    <depends>
+                        <field id="enable_organization">1</field>
+                    </depends>
                 </field>
                 <field id="reference_links" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Reference Links</label>
                     <frontend_model>Paskel\Seo\Block\Adminhtml\System\Config\Form\Field\SocialLinks</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <comment>List of links to social pages connected to the organization/website.</comment>
-                </field>
-            </group>
-        </section>
-        <section id="web">
-            <group id="frontend_settings" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Frontend PWA Settings</label>
-                <comment>Section to fill with frontend-related information.</comment>
-                <field id="use_pwa_frontend" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Enable Frontend PWA</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Set to yes if you are using the PWA technology and a separated server for the frontend.</comment>
-                </field>
-                <field id="frontend_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Frontend URL</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Baseurl</backend_model>
-                    <comment>Specify the domain at with the PWA frontend is reachable e.g. http://0.0.0.0:1000/</comment>
                     <depends>
-                        <field id="web/frontend_settings/use_pwa_frontend">1</field>
+                        <field id="enable_organization">1</field>
                     </depends>
+                </field>
+                <field id="enable_website" translate="label" type="select" sortOrder="30" showInDefault="1">
+                    <label>Enable Website Schema</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you want to add the website schema.org (https://schema.org/WebSite).</comment>
+                </field>
+                <field id="enable_product" translate="label" type="select" sortOrder="40" showInDefault="1">
+                    <label>Enable Product Schema</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes if you want to add the product schema.org (https://schema.org/Product).</comment>
                 </field>
             </group>
         </section>

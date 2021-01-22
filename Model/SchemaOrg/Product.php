@@ -17,6 +17,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Paskel\Seo\Api\Data\SchemaOrgInterface;
 use Paskel\Seo\Helper\Url as UrlHelper;
@@ -87,6 +88,10 @@ class Product implements SchemaOrgInterface
      * @throws NoSuchEntityException
      */
     public function getScript($productId = null) {
+        // check that this schema is enabled.
+        if (!$this->isEnabled()) {
+            return null;
+        }
         if ($productId == null) {
             throw new LocalizedException(__("ERROR: No product id specified."));
         }
@@ -128,6 +133,20 @@ class Product implements SchemaOrgInterface
             'image' => '"' . $this->getImageUrl($product, $store) . '"',
             'description' => '"' . $this->getDescription($product) . '"',
         ];
+    }
+
+    /**
+     * Return if the schema.org has been enabled in the config.
+     *
+     * @param null $storeId
+     * @return mixed
+     */
+    public function isEnabled($storeId = null) {
+        return $this->scopeConfig->getValue(
+            'seo/schemaOrg/enable_product',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
 
     /**

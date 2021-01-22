@@ -51,14 +51,14 @@ class FrontendSettings extends AbstractHelper
     public function getFrontendUrl($storeId = null)
     {
         $pwaFrontend = $this->scopeConfig->getValue(
-            'web/frontend_settings/use_pwa_frontend',
+            'seo/general/use_pwa_frontend',
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
 
         if ($pwaFrontend) {
             return $this->scopeConfig->getValue(
-                'web/frontend_settings/frontend_url',
+                'seo/general/frontend_url',
                 ScopeInterface::SCOPE_STORE,
                 $storeId
             );

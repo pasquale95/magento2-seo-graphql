@@ -22,9 +22,20 @@ abstract class AbstractSchemaOrg implements SchemaOrgInterface
     abstract public function getProperties();
 
     /**
+     * Returns true if the schema is enabled.
+     *
+     * @return boolean
+     */
+    abstract public function isEnabled();
+
+    /**
      * @inheritdoc
      */
     public function getScript() {
+        // check that this schema is enabled.
+        if (!$this->isEnabled()) {
+            return null;
+        }
         $script = '<script type="application/ld+json">{';
         $properties = $this->getProperties();
         foreach ($properties as $name=>$content) {

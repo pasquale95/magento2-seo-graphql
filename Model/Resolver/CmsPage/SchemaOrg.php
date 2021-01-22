@@ -55,15 +55,23 @@ class SchemaOrg implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        return [
-            [
+        // retrieve storeId
+        $storeId = $context->getExtensionAttributes()->getStore()->getId();
+
+        // return enabled schemas
+        $schemas = [];
+        if ($this->organizationSchema->isEnabled($storeId)) {
+            $schemas[] = [
                 'schemaType' => $this->organizationSchema->getType(),
                 'script' => $this->organizationSchema->getScript()
-            ],
-            [
+            ];
+        }
+        if ($this->websiteSchema->isEnabled($storeId)) {
+            $schemas[] = [
                 'schemaType' => $this->websiteSchema->getType(),
                 'script' => $this->websiteSchema->getScript()
-            ]
-        ];
+            ];
+        }
+        return $schemas;
     }
 }

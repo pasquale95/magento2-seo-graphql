@@ -81,6 +81,20 @@ class Website extends AbstractSchemaOrg
     }
 
     /**
+     * Return if the schema.org has been enabled in the config.
+     *
+     * @param null $storeId
+     * @return mixed
+     */
+    public function isEnabled($storeId = null) {
+        return $this->scopeConfig->getValue(
+            'seo/schemaOrg/enable_website',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
      * Returns the schema context
      *
      * @return string

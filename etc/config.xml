@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <seo>
+            <schemaOrg>
+                <enable_organization>1</enable_organization>
+                <enable_website>1</enable_website>
+                <enable_product>1</enable_product>
+            </schemaOrg>
+        </seo>
+    </default>
+</config>
