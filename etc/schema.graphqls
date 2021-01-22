@@ -17,6 +17,9 @@ interface ProductInterface {
     socialMarkup: [SocialMarkup]
         @doc(description: "Returns the social markup properties to insert in the <head> for the product.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\SocialMarkup")
+    schemaOrg: [SchemaOrg]
+        @doc(description: "Returns the schemaOrg script to add inside the html page.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\SchemaOrg")
 }
 
 interface CategoryInterface {
@@ -26,6 +29,9 @@ interface CategoryInterface {
     socialMarkup: SocialMarkup
         @doc(description: "Returns the social markup properties to insert in the <head> for the category.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\SocialMarkup")
+    schemaOrg: [SchemaOrg]
+        @doc(description: "Returns the schemaOrg script to add inside the html page.")
+        @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Category\\SchemaOrg")
 }
 
 type Hreflang @doc(description: "Hreflang object"){
