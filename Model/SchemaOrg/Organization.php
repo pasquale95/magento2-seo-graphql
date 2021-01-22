@@ -15,14 +15,13 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Paskel\Seo\Api\Data\SchemaOrgInterface;
 use Paskel\Seo\Helper\Url as UrlHelper;
 
 /**
  * Class Organization
  * @package Paskel\Seo\Model\SchemaOrg
  */
-class Organization implements SchemaOrgInterface
+class Organization extends AbstractSchemaOrg
 {
     const SCHEMA_TYPE = "Organization";
 
@@ -58,36 +57,17 @@ class Organization implements SchemaOrgInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getType() {
         return self::SCHEMA_TYPE;
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      * @throws NoSuchEntityException
      */
-    public function getScript() {
-        $script = '<script type="application/ld+json">{';
-        $properties = $this->getProperties();
-        foreach ($properties as $name=>$content) {
-            if (!empty($content)) {
-                $script .= '"' . $name . '": ' . $content . ',';
-            }
-        }
-        return rtrim($script, ",")
-            . '}'
-            . '</script>';
-    }
-
-    /**
-     * Returns the schema.org organization properties wrapped in an associative array.
-     *
-     * @return array
-     * @throws NoSuchEntityException
-     */
-    protected function getProperties() {
+    public function getProperties() {
         $store = $this->storeManager->getStore();
         $storeId = $store->getId();
         return [
@@ -119,7 +99,7 @@ class Organization implements SchemaOrgInterface
     }
 
     /**
-     * Retrieve organization website name.
+     * Retrieve organization name.
      *
      * @param string|null $storeId
      * @return string

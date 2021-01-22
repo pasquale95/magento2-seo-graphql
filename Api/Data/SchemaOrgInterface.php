@@ -18,11 +18,15 @@ interface SchemaOrgInterface
     const SCHEMA_CONTEXT = "https://schema.org";
 
     /**
+     * Returns the schema type.
+     *
      * @return string
      */
     public function getType();
 
     /**
+     * Populate the schema.org script.
+     *
      * @return string
      */
     public function getScript();

@@ -25,6 +25,7 @@ use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Helper\Url as UrlHelper;
 use Paskel\Seo\Model\SchemaOrg\Organization;
+use Paskel\Seo\Model\SchemaOrg\Website;
 use Paskel\Seo\Model\SocialMarkup\CmsPage\OpenGraph;
 
 /**
@@ -38,12 +39,28 @@ class SchemaOrg implements ResolverInterface
      */
     protected Organization $organizationSchema;
 
+    /**
+     * @var Website
+     */
+    protected Website $websiteSchema;
+
+    /**
+     * SchemaOrg constructor.
+     *
+     * @param Organization $organizationSchema
+     * @param Website $websiteSchema
+     */
     public function __construct(
-        Organization $organizationSchema
+        Organization $organizationSchema,
+        Website $websiteSchema
     ) {
         $this->organizationSchema = $organizationSchema;
+        $this->websiteSchema = $websiteSchema;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function resolve(
         Field $field,
         $context,
@@ -57,8 +74,8 @@ class SchemaOrg implements ResolverInterface
                 'script' => $this->organizationSchema->getScript()
             ],
             [
-                'schemaType' => 'anvig',
-                'script' => '<script=anvig.js1>alba</script>>'
+                'schemaType' => $this->websiteSchema->getType(),
+                'script' => $this->websiteSchema->getScript()
             ]
         ];
     }
