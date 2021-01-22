@@ -132,6 +132,7 @@ class Product implements SchemaOrgInterface
             'name' => '"' . $this->getName($product) . '"',
             'image' => '"' . $this->getImageUrl($product, $store) . '"',
             'description' => '"' . $this->getDescription($product) . '"',
+            'mpn' => '"' . $this->getMpn($product) . '"'
         ];
     }
 
