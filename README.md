@@ -8,7 +8,7 @@ If you like the module, leave a **star**! It's free for you, but keeps motivated
 
 - [Installation](#installation)
 - [SEO functionalities](#seo-functionalities)
-- [Frontend PWA Settings](#frontend-pwa-settings)
+- [General Settings](#general-settings)
 - [Hreflang Tag](#hreflang-tag)
     - [Hreflang settings](#hreflang-settings)
     - [How to use hreflang](#how-to-use-hreflang)
@@ -55,11 +55,13 @@ This module adds the following SEO functionalities to your Magento2:
 - **hreflang** tags;
 - **social markup** tags (also called social share tags).
 
-## Frontend PWA Settings
+## General Settings
 
-Usually the frontend server is deployed on a separated machine. If this is your case, use this section to insert the url where your frontend server is reachable. 
+This section is used to add all the general information about your e-commerce website. 
 
-![alt text](images/frontend_pwa_settings.png)
+![alt text](images/general_settings.png)
+
+With PWA technology Magento2 allows to split the backend server from the frontend server, in order to achieve better performance. If this is your case, use this section to insert the url where your frontend server is reachable.
 
 If, on the contrary, your frontend server is reachable at the same url address of the backend server, set this option to **No**. In this way the hreflang links are generated using the store **base url** of your backend server.
 
