@@ -15,6 +15,9 @@ If you like the module, leave a **star**! It's free for you, but keeps motivated
 - [Social Markup Tags](#social-markup-tags)
     - [Social Markup settings](#social-markup-settings)
     - [How to use social markup](#how-to-use-social-markup)
+- [Schema.org](#schemaorg)
+    - [Schema.org settings](#schemaorg-settings)
+    - [How to use Schema.org](#how-to-use-schemaorg)
 - [Troubleshooting](#troubleshooting)
 - [Contribute](#contribute)
 
@@ -220,6 +223,59 @@ Use these pieces of information to build at frontend the html social share tags 
     <meta property="og:image" content="http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg">
 </head>
 ```
+
+## Schema.org
+
+### Schema.org settings
+
+The module adds three possible schemas to enable/disable:
+- **Organization Schema**, used to add organization-related information on all pages (more details [here](https://schema.org/Organization));
+- **Website Schema**, used to add website-related information on all pages (more details [here](https://schema.org/WebSite));
+- **Product Schema**, used to add product-related information in product page (more details [here](https://schema.org/Product));
+
+![alt text](images/schemaOrg_settings.png)
+
+### How to use schema.org
+
+The module adds a new tag called `schemaOrg` inside the GraphQL schema of **categories**, **products** and **cms-pages**. Such tag returns an array of schema scripts in `JSON-LD` format (see the example below):
+
+```graphql
+query {
+    cmsPage(id:5) {
+        identifier
+        schemaOrg {
+            schemaType
+            script
+        }
+    }
+}
+```
+
+The response payload has the following layout:
+
+```json
+{
+  "data": {
+    "cmsPage": {
+      "identifier": "mypage",
+      "schemaOrg": [
+        {
+          "schemaType": "Organization",
+          "script": "<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\",\"@type\": \"Organization\",\"name\": \"Paskel\",\"url\": \"paskel.com\",\"logo\": \"http://local.magento.it/it/pub/media/seo/general/logo/default/paskel-icon.png\",\"sameAs\": [\"https://www.facebook.com/Paskel/\",\"https://www.instagram.com/Paskel/\",\"https://www.youtube.com/user/Paskel/\"]}</script>"
+        },
+        {
+          "schemaType": "WebSite",
+          "script": "<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\",\"@type\": \"WebSite\",\"name\": \"Paskel SEO\",\"url\": \"https://www.paskel.com/\"}</script>"
+        }
+      ]
+    }
+  }
+}
+```
+
+Eventually, the `script` content must be injected in the page.
+
+**N.B.**: the `schemaOrg` tag returns a third schema script once called in the products graphql, which is the Product schema.org.
 
 ## Troubleshooting
 
