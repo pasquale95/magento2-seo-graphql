@@ -9,21 +9,16 @@
 
 namespace Paskel\Seo\Model\Resolver\CmsPage;
 
-use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Api\PageRepositoryInterface;
-use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
+use Magento\Cms\Model\Page;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\UrlInterface;
-use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
-use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
-use Paskel\Seo\Helper\Url as UrlHelper;
 use Paskel\Seo\Model\SocialMarkup\CmsPage\OpenGraph;
 
 /**
@@ -44,12 +39,19 @@ class SocialMarkup implements ResolverInterface
      */
     protected PageRepositoryInterface $pageRepository;
 
+    /**
+     * @var SocialMarkupHelper
+     */
+    protected SocialMarkupHelper $socialMarkupHelper;
+
     public function __construct(
         PageRepositoryInterface $pageRepository,
-        OpenGraph $openGraph
+        OpenGraph $openGraph,
+        SocialMarkupHelper $socialMarkupHelper
     ) {
         $this->pageRepository = $pageRepository;
         $this->openGraph = $openGraph;
+        $this->socialMarkupHelper = $socialMarkupHelper;
     }
 
     /**
@@ -71,12 +73,14 @@ class SocialMarkup implements ResolverInterface
         array $args = null
     ) {
         // retrieve page
+        /** @var Page $page */
         $page = $this->pageRepository->getById($value[PageInterface::PAGE_ID]);
         // retrieve store
         $store = $context->getExtensionAttributes()->getStore();
 
+        $openGraphTags = $this->openGraph->getTags($page, $store);
         return [
-            'openGraph' => $this->openGraph->getTags($page, $store),
+            'openGraph' => $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl($openGraphTags),
             'twitterCard' => null
         ];
     }

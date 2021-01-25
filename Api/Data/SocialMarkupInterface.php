@@ -25,4 +25,11 @@ interface SocialMarkupInterface
      * Relative path where placeholder images are stored.
      */
     const PLACEHOLDER_FOLDER = "seo/socialMarkup/placeholder";
+
+    /**
+     * @param $item
+     * @param $store
+     * @return array
+     */
+    public function getTags($item, $store);
 }

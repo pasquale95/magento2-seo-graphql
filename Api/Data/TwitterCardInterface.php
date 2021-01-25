@@ -33,27 +33,7 @@ interface TwitterCardInterface extends SocialMarkupInterface
     const IMAGE = "twitter:image";
 
     /**
-     * @param $card
+     * @return string
      */
-    public function setCard($card);
-
-    /**
-     * @param $site
-     */
-    public function setSite($site);
-
-    /**
-     * @param $title
-     */
-    public function setTitle($title);
-
-    /**
-     * @param $description
-     */
-    public function setDescription($description);
-
-    /**
-     * @param $image
-     */
-    public function setImage($image);
+    public function getCard();
 }

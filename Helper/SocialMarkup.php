@@ -13,6 +13,8 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\ScopeInterface;
+use Paskel\Seo\Api\Data\OpenGraphInterface;
+use Paskel\Seo\Api\Data\TwitterCardInterface;
 
 /**
  * Class SocialMarkup
@@ -37,6 +39,42 @@ class SocialMarkup extends AbstractHelper
     ) {
         $this->hreflangHelper = $hreflangHelper;
         parent::__construct($context);
+    }
+
+    /**
+     * Return openGraph tags in a form which accomplishes the
+     * graphQl format.
+     *
+     * @param array $tags
+     * @return array
+     */
+    public function formatOpenGraphTagsForGraphQl($tags) {
+        $formattedTags = [];
+        foreach ($tags as $property=>$content) {
+            $formattedTags[] = [
+                OpenGraphInterface::TAG_PROPERTY => $property,
+                OpenGraphInterface::TAG_CONTENT => $content,
+            ];
+        }
+        return $formattedTags;
+    }
+
+    /**
+     * Return twitter card tags in a form which accomplishes the
+     * graphQl format.
+     *
+     * @param array $tags
+     * @return array
+     */
+    public function formatTwitterCardTagsForGraphQl($tags) {
+        $formattedTags = [];
+        foreach ($tags as $name=>$content) {
+            $formattedTags[] = [
+                TwitterCardInterface::TAG_NAME => $name,
+                TwitterCardInterface::TAG_CONTENT => $content,
+            ];
+        }
+        return $formattedTags;
     }
 
     /**

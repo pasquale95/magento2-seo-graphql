@@ -28,7 +28,7 @@ interface OpenGraphInterface extends SocialMarkupInterface
      */
     const TYPE = "og:type";
     const LOCALE = "og:locale";
-    const SITENAME = "og:site_name";
+    const SITE = "og:site_name";
     const URL = "og:url";
     const TITLE = "og:title";
     const DESCRIPTION = "og:description";
@@ -39,39 +39,4 @@ interface OpenGraphInterface extends SocialMarkupInterface
      */
     const TYPE_VALUE = "website";
     const SITENAME_VALUE = "example";
-
-    /**
-     * @param $title
-     */
-    public function setTitle($title);
-
-    /**
-     * @param $description
-     */
-    public function setDescription($description);
-
-    /**
-     * @param $image
-     */
-    public function setImage($image);
-
-    /**
-     * @param $type
-     */
-    public function setType($type);
-
-    /**
-     * @param $locale
-     */
-    public function setLocale($locale);
-
-    /**
-     * @param $sitename
-     */
-    public function setSitename($sitename);
-
-    /**
-     * @param $url
-     */
-    public function setUrl($url);
 }

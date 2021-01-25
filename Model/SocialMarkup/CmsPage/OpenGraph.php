@@ -9,84 +9,119 @@
 
 namespace Paskel\Seo\Model\SocialMarkup\CmsPage;
 
-use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
-use Magento\Cms\Api\PageRepositoryInterface;
+use Magento\Cms\Model\Page;
 use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
-use Magento\Framework\UrlInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
-use Paskel\Seo\Helper\Hreflang as HreflangHelper;
+use Paskel\Seo\Api\Data\OpenGraphInterface;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
-use Paskel\Seo\Helper\Url as UrlHelper;
-use Paskel\Seo\Model\SocialMarkup\AbstractOpenGraph;
+use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
  * Class OpenGraph
  * @package Paskel\Seo\Model\SocialMarkup\CmsPage
  */
-class OpenGraph extends AbstractOpenGraph
+class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
 {
     /**
-     * Retrieve OpenGraph tags
-     *
-     * @param $page
-     * @param $store
-     * @return array
+     * @var StoreConfigDataProvider
      */
-    public function getTags($page, $store) {
-        //$page = $this->pageRepository->getById($value[PageInterface::PAGE_ID]);
-        // retrieve store
-        //$store = $context->getExtensionAttributes()->getStore();
-        // initialise socialMarkups
-        //$this->socialMarkups = [];
+    protected StoreConfigDataProvider $storeConfigDataProvider;
 
-        // add type
-        $this->setType(self::TYPE_VALUE);
-        // add locale
-        $this->setLocale($this->storeConfigDataProvider->getStoreConfigData($store)['locale']);
-        // add site_name
-        $this->setSitenameByStore($store->getId());
-        // add url
-        $this->setUrl($this->socialMarkupHelper->retrieveUrl(
-            $page->getIdentifier(),
-            CmsPageUrlRewriteGenerator::ENTITY_TYPE,
-            $store->getId()
-        ));
-        // add title
-        $this->setTitle(!empty($value['meta_title']) ?
-            $value['meta_title'] : $page->getTitle());
-        // add description
-        $this->setDescription(!empty($value['meta_description']) ?
-            $value['meta_description'] : $page->getContentHeading());
-        // add image, if any
-        $this->setImage($this->retrieveImage($page, $store));
+    /**
+     * @var HreflangHelper
+     */
+    protected HreflangHelper $hreflangHelper;
 
-        return $this->tags;
+    /**
+     * AbstractSocialMarkup constructor.
+     *
+     * @param SocialMarkupHelper $socialMarkupHelper
+     * @param StoreConfigDataProvider $storeConfigsDataProvider
+     * @param HreflangHelper $hreflangHelper
+     */
+    public function __construct(
+        SocialMarkupHelper $socialMarkupHelper,
+        StoreConfigDataProvider $storeConfigsDataProvider,
+        HreflangHelper $hreflangHelper
+    ) {
+        $this->storeConfigDataProvider = $storeConfigsDataProvider;
+        $this->hreflangHelper = $hreflangHelper;
+        parent::__construct($socialMarkupHelper);
     }
 
     /**
-     * Retrieve cms page image url.
-     * If not, use placeholder image.
+     * Retrieve OpenGraph tags
      *
-     * @param $page
+     * @param Page $item
      * @param $store
-     * @return string|null
+     * @return array
      */
-    public function retrieveImage($page, $store) {
-        // retrieve store info
+    public function getTags($item, $store) {
         $storeId = $store->getId();
-        $storeUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+        // add tags
+        $tags = [
+            self::TYPE => $this->getType(),
+            self::LOCALE => $this->getLocale($store),
+            self::SITE => $this->getSite($storeId),
+            self::URL => $this->getUrl($item, $storeId),
+            self::TITLE => $this->getTitle($item),
+            self::DESCRIPTION => $this->getDescription($item),
+            self::IMAGE => $this->getImage($item, $store)    ,
+        ];
+        // remove unset properties if requested by user
+        if (!$this->socialMarkupHelper->hideUnsetPropertiesInGraphQl()) {
+            return $this->removeUnsetTags($tags);
+        }
+        return $tags;
+    }
 
-        $imageUrl = $page->getSocialMarkupImage();
-        if (!$imageUrl) {
-            $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
-                CmsPageUrlRewriteGenerator::ENTITY_TYPE,
-                $storeId
-            );
-            if (!empty($imageUrl)) {
-                // return placeholder
-                $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
+    /**
+     * Unset all array elements with an empty value.
+     *
+     * @param $tags
+     * @return mixed
+     */
+    protected function removeUnsetTags($tags) {
+        foreach ($tags as $property=>$content) {
+            if (empty($content)) {
+                unset($tags[$property]);
             }
         }
-        return $imageUrl ?? null;
+        return $tags;
+    }
+
+    /**
+     * Return OpenGraph website type.
+     *
+     * @return string
+     */
+    public function getType() {
+        return self::TYPE_VALUE;
+    }
+
+    /**
+     * Return store locale.
+     *
+     * @param $store
+     * @return string
+     */
+    public function getLocale($store) {
+        return $this->storeConfigDataProvider->getStoreConfigData($store)['locale'];
+    }
+
+    /**
+     * Return page url.
+     *
+     * @param Page $page
+     * @param $storeId
+     * @return string|null
+     */
+    public function getUrl($page, $storeId) {
+        return $this->socialMarkupHelper->retrieveUrl(
+            $page->getIdentifier(),
+            CmsPageUrlRewriteGenerator::ENTITY_TYPE,
+            $storeId
+        );
     }
 }
