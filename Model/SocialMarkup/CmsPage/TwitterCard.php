@@ -11,16 +11,20 @@ namespace Paskel\Seo\Model\SocialMarkup\CmsPage;
 
 use Magento\Cms\Model\Page;
 use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Store\Model\ScopeInterface;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
 use Paskel\Seo\Api\Data\OpenGraphInterface;
+use Paskel\Seo\Api\Data\TwitterCardInterface;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 
 /**
- * Class OpenGraph
+ * Class TwitterCard
  * @package Paskel\Seo\Model\SocialMarkup\CmsPage
  */
-class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
+class TwitterCard extends AbstractSocialMarkup implements TwitterCardInterface
 {
     /**
      * @var StoreConfigDataProvider
@@ -33,17 +37,25 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
     protected HreflangHelper $hreflangHelper;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    protected ScopeConfigInterface $scopeConfig;
+
+    /**
      * AbstractSocialMarkup constructor.
      *
      * @param SocialMarkupHelper $socialMarkupHelper
+     * @param ScopeConfigInterface $scopeConfig
      * @param StoreConfigDataProvider $storeConfigsDataProvider
      * @param HreflangHelper $hreflangHelper
      */
     public function __construct(
         SocialMarkupHelper $socialMarkupHelper,
+        ScopeConfigInterface $scopeConfig,
         StoreConfigDataProvider $storeConfigsDataProvider,
         HreflangHelper $hreflangHelper
     ) {
+        $this->scopeConfig = $scopeConfig;
         $this->storeConfigDataProvider = $storeConfigsDataProvider;
         $this->hreflangHelper = $hreflangHelper;
         parent::__construct($socialMarkupHelper);
@@ -60,16 +72,14 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
         $storeId = $store->getId();
         // add tags
         $tags = [
-            self::TYPE => $this->getType(),
-            self::LOCALE => $this->getLocale($store),
+            self::CARD => $this->getCard($storeId),
             self::SITE => $this->getSite($storeId),
-            self::URL => $this->getUrl($item, $storeId),
             self::TITLE => $this->getTitle($item),
             self::DESCRIPTION => $this->getDescription($item),
-            self::IMAGE => $this->getImage($item, $store)    ,
+            self::IMAGE => $this->getImage($item, $store)
         ];
         // remove unset properties if requested by user
-        if (!$this->socialMarkupHelper->hideUnsetPropertiesInGraphQl()) {
+        if ($this->socialMarkupHelper->hideUnsetPropertiesInGraphQl()) {
             return $this->removeUnsetTags($tags);
         }
         return $tags;
@@ -91,46 +101,22 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
     }
 
     /**
-     * Return OpenGraph website type.
-     *
-     * @return string
-     */
-    public function getType() {
-        return self::TYPE_VALUE;
-    }
-
-    /**
-     * Return store locale.
-     *
-     * @param $store
-     * @return string
-     */
-    public function getLocale($store) {
-        return $this->storeConfigDataProvider->getStoreConfigData($store)['locale'];
-    }
-
-    /**
-     * Returns site name.
+     * Return the twitter card type.
      *
      * @param $storeId
-     * @return mixed|null
+     * @return string
+     */
+    protected function getCard($storeId) {
+        return $this->socialMarkupHelper->getTwitterCardType($storeId);
+    }
+
+    /**
+     * Return the twitter card site.
+     *
+     * @param $storeId
+     * @return string
      */
     protected function getSite($storeId) {
-        return $this->socialMarkupHelper->getSitename($storeId) ?? null;
-    }
-
-    /**
-     * Return page url.
-     *
-     * @param Page $page
-     * @param $storeId
-     * @return string|null
-     */
-    public function getUrl($page, $storeId) {
-        return $this->socialMarkupHelper->retrieveUrl(
-            $page->getIdentifier(),
-            CmsPageUrlRewriteGenerator::ENTITY_TYPE,
-            $storeId
-        );
+        return $this->socialMarkupHelper->getTwitterHandle($storeId);
     }
 }

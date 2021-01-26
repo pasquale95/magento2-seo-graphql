@@ -31,9 +31,4 @@ interface TwitterCardInterface extends SocialMarkupInterface
     const TITLE = "twitter:title";
     const DESCRIPTION = "twitter:description";
     const IMAGE = "twitter:image";
-
-    /**
-     * @return string
-     */
-    public function getCard();
 }

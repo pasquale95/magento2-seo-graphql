@@ -49,16 +49,6 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
     }
 
     /**
-     * Returns site name.
-     *
-     * @param $storeId
-     * @return mixed|null
-     */
-    protected function getSite($storeId) {
-        return $this->socialMarkupHelper->getSitename($storeId) ?? null;
-    }
-
-    /**
      * Returns the page title.
      *
      * @param Page $page

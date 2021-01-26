@@ -20,6 +20,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Model\SocialMarkup\CmsPage\OpenGraph;
+use Paskel\Seo\Model\SocialMarkup\CmsPage\TwitterCard;
 
 /**
  * Class SocialMarkup
@@ -40,6 +41,11 @@ class SocialMarkup implements ResolverInterface
     protected PageRepositoryInterface $pageRepository;
 
     /**
+     * @var TwitterCard
+     */
+    protected TwitterCard $twitterCard;
+
+    /**
      * @var SocialMarkupHelper
      */
     protected SocialMarkupHelper $socialMarkupHelper;
@@ -47,10 +53,12 @@ class SocialMarkup implements ResolverInterface
     public function __construct(
         PageRepositoryInterface $pageRepository,
         OpenGraph $openGraph,
+        TwitterCard $twitterCard,
         SocialMarkupHelper $socialMarkupHelper
     ) {
         $this->pageRepository = $pageRepository;
         $this->openGraph = $openGraph;
+        $this->twitterCard = $twitterCard;
         $this->socialMarkupHelper = $socialMarkupHelper;
     }
 
@@ -79,9 +87,10 @@ class SocialMarkup implements ResolverInterface
         $store = $context->getExtensionAttributes()->getStore();
 
         $openGraphTags = $this->openGraph->getTags($page, $store);
+        $twitterCards = $this->twitterCard->getTags($page, $store);
         return [
             'openGraph' => $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl($openGraphTags),
-            'twitterCard' => null
+            'twitterCard' => $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl($twitterCards),
         ];
     }
 }

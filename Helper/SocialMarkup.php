@@ -121,6 +121,45 @@ class SocialMarkup extends AbstractHelper
     }
 
     /**
+     * Return true if twitter card is enabled.
+     *
+     * @param int|null $storeId
+     * @return mixed
+     */
+    public function isTwitterCardEnabled($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            'seo/socialMarkup/enable_twitter_card',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * @param $storeId
+     * @return string
+     */
+    public function getTwitterCardType($storeId) {
+        return $this->scopeConfig->getValue(
+            'seo/socialMarkup/twitter_card',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * @param $storeId
+     * @return string
+     */
+    public function getTwitterHandle($storeId) {
+        return $this->scopeConfig->getValue(
+            'seo/socialMarkup/twitter_account_handle',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
      * Retrieve full url using hreflang table.
      *
      * @param $entityId

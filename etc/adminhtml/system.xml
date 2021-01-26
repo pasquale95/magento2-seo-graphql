@@ -100,23 +100,43 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set to yes if you want to add the unset options in the graphQL.</comment>
                 </field>
-                <field id="product_placeholder" type="image" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="product_placeholder" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product Image Placeholder</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
                     <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
                 </field>
-                <field id="category_placeholder" type="image" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="category_placeholder" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Category Image Placeholder</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
                     <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
                 </field>
-                <field id="cms_page_placeholder" type="image" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="cms_page_placeholder" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>CMS Page Image Placeholder</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">seo/socialMarkup/placeholder</upload_dir>
                     <base_url type="media" scope_info="1">seo/socialMarkup/placeholder</base_url>
+                </field>
+                <field id="enable_twitter_card" translate="label" sortOrder="50" type="select" showInDefault="1">
+                    <label>Enable Twitter Card</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set to yes you want to add Twitter card markups in the graphql.</comment>
+                </field>
+                <field id="twitter_card" translate="label" sortOrder="55" type="select" showInDefault="1">
+                    <label>Twitter Card</label>
+                    <source_model>Paskel\Seo\Model\Config\Source\TwitterCard</source_model>
+                    <comment>Choose the twitter card type to use for sharing.</comment>
+                    <depends>
+                        <field id="enable_twitter_card">1</field>
+                    </depends>
+                </field>
+                <field id="twitter_account_handle" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Twitter Account Handle</label>
+                    <comment>Specify the twitter account handle (e.g. @username).</comment>
+                    <depends>
+                        <field id="enable_twitter_card">1</field>
+                    </depends>
                 </field>
             </group>
             <!-- SCHEMA ORG -->
