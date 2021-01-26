@@ -10,12 +10,8 @@
 namespace Paskel\Seo\Model\SocialMarkup\CmsPage;
 
 use Magento\Cms\Model\Page;
-use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Store\Model\ScopeInterface;
 use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
-use Paskel\Seo\Api\Data\OpenGraphInterface;
 use Paskel\Seo\Api\Data\TwitterCardInterface;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Helper\Hreflang as HreflangHelper;

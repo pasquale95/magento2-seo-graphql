@@ -9,15 +9,10 @@
 
 namespace Paskel\Seo\Model\SocialMarkup\CmsPage;
 
-use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
 use Magento\Cms\Model\Page;
 use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\UrlInterface;
-use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
-use Paskel\Seo\Api\Data\OpenGraphInterface;
 use Paskel\Seo\Api\Data\SocialMarkupInterface;
-use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
 use Paskel\Seo\Helper\Url as UrlHelper;
 
@@ -77,8 +72,8 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
      * @return string
      */
     protected function getImage($page, $store) {
+        // retrieve store info
         $storeId = $store->getId();
-        $storeUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
 
         $imageUrl = $page->getData('social_markup_image');
         if (!$imageUrl) {
@@ -88,7 +83,8 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
             );
             if (!empty($imageUrl)) {
                 // return placeholder
-                $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
+                $storeMediaUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+                $imageUrl = UrlHelper::pinchUrl($storeMediaUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
             }
         }
         return $imageUrl ?? null;
