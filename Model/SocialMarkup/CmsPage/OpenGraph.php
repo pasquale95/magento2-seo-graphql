@@ -69,7 +69,7 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
             self::IMAGE => $this->getImage($item, $store)    ,
         ];
         // remove unset properties if requested by user
-        if (!$this->socialMarkupHelper->hideUnsetPropertiesInGraphQl()) {
+        if ($this->socialMarkupHelper->hideUnsetPropertiesInGraphQl()) {
             return $this->removeUnsetTags($tags);
         }
         return $tags;

@@ -14,7 +14,7 @@ interface ProductInterface {
     hreflang: [Hreflang]
         @doc(description: "Returns the hreflang html tags to insert in page for the product.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\Hreflang")
-    socialMarkup: [SocialMarkup]
+    socialMarkup: SocialMarkup
         @doc(description: "Returns the social markup properties to insert in the <head> for the product.")
         @resolver(class: "Paskel\\Seo\\Model\\Resolver\\Product\\SocialMarkup")
     schemaOrg: [SchemaOrg]
