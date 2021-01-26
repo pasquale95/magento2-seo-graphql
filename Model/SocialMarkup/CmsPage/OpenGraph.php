@@ -62,7 +62,7 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
         $tags = [
             self::TYPE => $this->getType(),
             self::LOCALE => $this->getLocale($store),
-            self::SITE => $this->getSite($storeId),
+            self::SITE => $this->getSitename($storeId),
             self::URL => $this->getUrl($item, $storeId),
             self::TITLE => $this->getTitle($item),
             self::DESCRIPTION => $this->getDescription($item),
@@ -115,7 +115,7 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
      * @param $storeId
      * @return mixed|null
      */
-    protected function getSite($storeId) {
+    protected function getSitename($storeId) {
         return $this->socialMarkupHelper->getSitename($storeId) ?? null;
     }
 
@@ -126,7 +126,7 @@ class OpenGraph extends AbstractSocialMarkup implements OpenGraphInterface
      * @param $storeId
      * @return string|null
      */
-    public function getUrl($page, $storeId) {
+    protected function getUrl($page, $storeId) {
         return $this->socialMarkupHelper->retrieveUrl(
             $page->getIdentifier(),
             CmsPageUrlRewriteGenerator::ENTITY_TYPE,
