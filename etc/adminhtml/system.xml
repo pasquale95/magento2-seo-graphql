@@ -141,7 +141,7 @@
             </group>
             <!-- SCHEMA ORG -->
             <group id="schemaOrg" translate="label" type="text" sortOrder="40" showInStore="1" showInDefault="1" showInWebsite="1">
-                <label>Schema.org</label>
+                <label>Schema.org Settings</label>
                 <field id="enable_organization" translate="label" type="select" sortOrder="5" showInDefault="1">
                     <label>Enable Organization Schema</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
