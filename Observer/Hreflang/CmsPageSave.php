@@ -54,7 +54,7 @@ class CmsPageSave implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $page = $observer->getEvent()->getData('page');
+        $page = $observer->getEvent()->getObject();
         // Check that the loaded obj. is actually a page
         if ($page instanceof Page) {
             $this->hreflangHelper->generateHreflang(
