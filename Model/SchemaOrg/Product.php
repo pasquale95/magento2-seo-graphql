@@ -129,10 +129,10 @@ class Product implements SchemaOrgInterface
         return [
             '@context' => '"' . $this->getSchemaContext() . '"',
             '@type' => '"' . $this->getSchemaType() . '"',
-            'name' => '"' . $this->getName($product) . '"',
+            'name' => '"' . addslashes($this->getName($product)) . '"',
             'image' => '"' . $this->getImageUrl($product, $store) . '"',
-            'description' => '"' . $this->getDescription($product) . '"',
-            'mpn' => '"' . $this->getMpn($product) . '"'
+            'description' => '"' . addslashes($this->getDescription($product)) . '"',
+            'mpn' => '"' . addslashes($this->getMpn($product)) . '"'
         ];
     }
 

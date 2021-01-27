@@ -75,8 +75,8 @@ class Website extends AbstractSchemaOrg
         return [
             '@context' => '"' . $this->getSchemaContext() . '"',
             '@type' => '"' . $this->getSchemaType() . '"',
-            'name' => '"' . $this->getWebsiteName($storeId) . '"',
-            'url' => '"' . $this->getWebsiteUrl() . '"'
+            'name' => '"' . addslashes($this->getWebsiteName($storeId)) . '"',
+            'url' => '"' . addslashes($this->getWebsiteUrl()) . '"'
         ];
     }
 

@@ -73,8 +73,8 @@ class Organization extends AbstractSchemaOrg
         return [
             '@context' => '"' . $this->getSchemaContext() . '"',
             '@type' => '"' . $this->getSchemaType() . '"',
-            'name' => '"' . $this->getOrganizationName($storeId) . '"',
-            'url' => '"' . $this->getOrganizationUrl($storeId) . '"',
+            'name' => '"' . addslashes($this->getOrganizationName($storeId)) . '"',
+            'url' => '"' . addslashes($this->getOrganizationUrl($storeId)) . '"',
             'logo' => '"' . $this->getLogo($store) . '"',
             'sameAs' => $this->getReferenceLinks($storeId)
         ];
@@ -182,7 +182,7 @@ class Organization extends AbstractSchemaOrg
                 // if at least a link is set, return it
                 $linksString = '[';
                 foreach ($links as $link) {
-                    $linksString .= '"' . $link['link'] . '",';
+                    $linksString .= '"' . addslashes($link['link']) . '",';
                 }
                 return rtrim($linksString, ',') . ']';
             }
