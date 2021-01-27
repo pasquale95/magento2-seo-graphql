@@ -98,7 +98,7 @@ class Product implements SchemaOrgInterface
         $script = '<script type="application/ld+json">{';
         $properties = $this->getProperties($productId);
         foreach ($properties as $name=>$content) {
-            if (!empty($content)) {
+            if (!empty(ltrim(rtrim($content, '"'), '"'))) {
                 $script .= '"' . $name . '": ' . $content . ',';
             }
         }
