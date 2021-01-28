@@ -83,17 +83,23 @@ class SocialMarkup implements ResolverInterface
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
         }
+        $socialMarkups = [];
         // retrieve store
         $store = $context->getExtensionAttributes()->getStore();
         // retrieve category
         /** @var Category $category */
         $category = $this->categoryRepository->get($value['model']->getId(), $store->getId());
+        // retrieve openGraph tags and add them to the array
+        $socialMarkups['openGraph'] = $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl(
+            $this->openGraph->getTags($category, $store)
+        );
+        // if twitter cards are enabled, add twitter tags
+        if ($this->socialMarkupHelper->isTwitterCardEnabled($store->getId())) {
+            $socialMarkups['twitterCard'] = $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl(
+                $this->twitterCard->getTags($category, $store)
+            );
+        }
 
-        $openGraphTags = $this->openGraph->getTags($category, $store);
-        $twitterCards = $this->twitterCard->getTags($category, $store);
-        return [
-            'openGraph' => $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl($openGraphTags),
-            'twitterCard' => $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl($twitterCards),
-        ];
+        return $socialMarkups;
     }
 }

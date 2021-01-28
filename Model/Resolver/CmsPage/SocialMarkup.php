@@ -80,17 +80,23 @@ class SocialMarkup implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        // retrieve store
+        $store = $context->getExtensionAttributes()->getStore();
         // retrieve page
         /** @var Page $page */
         $page = $this->pageRepository->getById($value[PageInterface::PAGE_ID]);
-        // retrieve store
-        $store = $context->getExtensionAttributes()->getStore();
 
-        $openGraphTags = $this->openGraph->getTags($page, $store);
-        $twitterCards = $this->twitterCard->getTags($page, $store);
-        return [
-            'openGraph' => $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl($openGraphTags),
-            'twitterCard' => $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl($twitterCards),
-        ];
+        // retrieve openGraph tags and add them to the array
+        $socialMarkups['openGraph'] = $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl(
+            $this->openGraph->getTags($page, $store)
+        );
+        // if twitter cards are enabled, add twitter tags
+        if ($this->socialMarkupHelper->isTwitterCardEnabled($store->getId())) {
+            $socialMarkups['twitterCard'] = $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl(
+                $this->twitterCard->getTags($page, $store)
+            );
+        }
+
+        return $socialMarkups;
     }
 }

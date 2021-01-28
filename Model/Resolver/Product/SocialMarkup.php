@@ -79,6 +79,7 @@ class SocialMarkup implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        $socialMarkups = [];
         // Raise exception if no product model in the request
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
@@ -88,12 +89,17 @@ class SocialMarkup implements ResolverInterface
         // retrieve product
         /** @var Product $product */
         $product = $this->productRepository->getById($value['model']->getId());
+        // retrieve openGraph tags and add them to the array
+        $socialMarkups['openGraph'] = $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl(
+            $this->openGraph->getTags($product, $store)
+        );
+        // if twitter cards are enabled, add twitter tags
+        if ($this->socialMarkupHelper->isTwitterCardEnabled($store->getId())) {
+            $socialMarkups['twitterCard'] = $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl(
+                $this->twitterCard->getTags($product, $store)
+            );
+        }
 
-        $openGraphTags = $this->openGraph->getTags($product, $store);
-        $twitterCards = $this->twitterCard->getTags($product, $store);
-        return [
-            'openGraph' => $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl($openGraphTags),
-            'twitterCard' => $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl($twitterCards),
-        ];
+        return $socialMarkups;
     }
 }
