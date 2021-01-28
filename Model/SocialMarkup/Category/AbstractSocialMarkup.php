@@ -50,7 +50,7 @@ abstract class AbstractSocialMarkup implements SocialMarkupInterface
      * @return string
      */
     protected function getTitle($category) {
-        return $category->getName();
+        return $category->getMetaTitle() ?? $category->getName();
     }
 
     /**
