@@ -12,6 +12,7 @@ namespace Paskel\Seo\Model\SchemaOrg;
 use Magento\Catalog\Model\Product as ProductModel;
 use Magento\Catalog\Model\ProductRepositoryFactory;
 use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
+use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -20,6 +21,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Paskel\Seo\Api\Data\SchemaOrgInterface;
+use Paskel\Seo\Helper\Hreflang;
 use Paskel\Seo\Helper\Url as UrlHelper;
 
 /**
@@ -29,6 +31,7 @@ use Paskel\Seo\Helper\Url as UrlHelper;
 class Product implements SchemaOrgInterface
 {
     const SCHEMA_TYPE = "Product";
+    const OFFERS_AVAILABILITY_SCHEMA = "https://schema.org/InStock";
 
     /**
      * @var ScopeConfigInterface
@@ -51,22 +54,30 @@ class Product implements SchemaOrgInterface
     protected PlaceholderProvider $placeholderProvider;
 
     /**
+     * @var Hreflang
+     */
+    protected Hreflang $hreflangHelper;
+
+    /**
      * Product constructor.
      *
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param ProductRepositoryFactory $productRepositoryFactory
+     * @param Hreflang $hreflangHelper
      * @param PlaceholderProvider $placeholderProvider
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
         ProductRepositoryFactory $productRepositoryFactory,
+        Hreflang $hreflangHelper,
         PlaceholderProvider $placeholderProvider
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
         $this->productRepositoryFactory = $productRepositoryFactory;
+        $this->hreflangHelper = $hreflangHelper;
         $this->placeholderProvider = $placeholderProvider;
     }
 
@@ -132,7 +143,8 @@ class Product implements SchemaOrgInterface
             'name' => '"' . addslashes($this->getName($product)) . '"',
             'image' => '"' . $this->getImageUrl($product, $store) . '"',
             'description' => '"' . addslashes($this->getDescription($product)) . '"',
-            'mpn' => '"' . addslashes($this->getMpn($product)) . '"'
+            'mpn' => '"' . addslashes($this->getMpn($product)) . '"',
+            'offers' => $this->getOffers($product, $store)
         ];
     }
 
@@ -216,5 +228,37 @@ class Product implements SchemaOrgInterface
      */
     protected function getMpn($product) {
         return $product->getSku();
+    }
+
+    /**
+     * Retrieve product offers.
+     *
+     * @param ProductModel $product
+     * @param $store
+     * @return string
+     * @throws LocalizedException
+     */
+    protected function getOffers($product, $store) {
+        // add tag properties
+        $properties['@type'] = 'Offer';
+        $properties['price'] = number_format($product->getPrice(), 2);
+        $properties['priceCurrency'] = $store->getCurrentCurrencyCode();
+        $properties['availability'] = self::OFFERS_AVAILABILITY_SCHEMA;
+        $hreflang = $this->hreflangHelper->getStoreHreflang(
+            $product->getId(),
+            ProductUrlRewriteGenerator::ENTITY_TYPE,
+            $store->getId()
+        );
+        if ($hreflang) {
+            $properties['url'] = $hreflang->getUrl();
+        }
+        // create tag based on available tag properties
+        $tag = '[{';
+        foreach ($properties as $name=>$content) {
+            if (!empty(ltrim(rtrim($content, '"'), '"'))) {
+                $tag .= '"' . $name . '": "' . $content . '",';
+            }
+        }
+        return rtrim($tag, ",") . '}]';
     }
 }
