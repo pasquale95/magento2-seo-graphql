@@ -149,7 +149,8 @@ The module offers several settings to personalize the intended behaviour:
 
 In details, you can:
 - set the *site name* used to populate the `og:site_name` tag;
-- set image placeholders for categories, products and pages to use in case no image has been set for a specific item.
+- set image placeholders for categories, products and pages to use in case no image has been set for a specific item;
+- enable **Twitter** cards markup.
 
 ### How to use social markup
 
@@ -162,8 +163,14 @@ query {
     cmsPage(id:5) {
         identifier
         socialMarkup {
-            property
-            content
+            openGraph {
+              property
+              content
+            }
+            twitterCard {
+              name
+              content
+            }
         }
     }
 }
@@ -176,36 +183,60 @@ The response payload has the following layout:
     "data": {
         "cmsPage": {
             "identifier": "mypage",
-            "socialMarkup": [
-                {
-                    "property": "og:type",
-                    "content": "website"
-                },
-                {
-                    "property": "og:locale",
-                    "content": "en_US"
-                },
-                {
-                    "property": "og:site_name",
-                    "content": "Paskel SEO Pwa"
-                },
-                {
-                    "property": "og:url",
-                    "content": "https://www.paskel.com/us/en/mypage"
-                },
-                {
-                    "property": "og:title",
-                    "content": "My Page"
-                },
-                {
-                    "property": "og:description",
-                    "content": "My Page meta description"
-                },
-                {
-                    "property": "og:image",
-                    "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
-                }
-            ]
+            "socialMarkup": {
+                "openGraph": [
+                    {
+                      "property": "og:type",
+                      "content": "website"
+                    },
+                    {
+                      "property": "og:locale",
+                      "content": "en_US"
+                    },
+                    {
+                      "property": "og:site_name",
+                      "content": "Paskel SEO"
+                    },
+                    {
+                      "property": "og:url",
+                      "content": "https://www.paskel.com/us/en/mypage"
+                    },
+                    {
+                      "property": "og:title",
+                      "content": "My Page"
+                    },
+                    {
+                      "property": "og:description",
+                      "content": "My Page meta description"
+                    },
+                    {
+                      "property": "og:image",
+                      "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
+                    }
+                ],
+                "twitterCard": [
+                    {
+                      "name": "twitter:card",
+                      "content": "summary_card"
+                    },
+                    {
+                      "name": "twitter:site",
+                      "content": "@paskel"
+                    },
+                    {
+                      "name": "twitter:title",
+                      "content": "My Page"
+                    },
+                    {
+                      "name": "twitter:description",
+                      "content": "My Page meta description"
+                    },
+                    {
+                      "name": "twitter:image",
+                      "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
+                    }
+                ]
+            }
         }
     }
 }
@@ -223,6 +254,12 @@ Use these pieces of information to build at frontend the html social share tags 
     <meta property="og:title" content="My Page">
     <meta property="og:description" content="My Page meta description">
     <meta property="og:image" content="http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg">
+    ...
+    <meta name="twitter:card" content="summary_card">
+    <meta name="twitter:site" content="@paskel">
+    <meta name="twitter:title" content="My Page">
+    <meta name="twitter:description" content="My Page meta description">
+    <meta name="twitter:image" content="http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg">
 </head>
 ```
 
