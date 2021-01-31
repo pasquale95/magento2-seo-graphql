@@ -1,12 +1,13 @@
-# magento2-pwa-seo
+# magento2-seo-graphql
 
-**Magento2 PWA SEO** is a module for Magento2 crafted to add advanced SEO features to your Magento2 website based on the new web technology standard called as **Progressive Web Application (PWA)**. Use it to add SEO-specific tags inside the Magento2 GraphQL schema and make your website *SEO friendly*, boosting its ranking in the search results of the most famous search engines.
+**Magento2 SEO GraphQL** is a module for Magento2 crafted to add advanced SEO features to your Magento2 website. This module has been developed to work together with the new web technology standard called as **Progressive Web Application (PWA)**, which is indeed graphQL-based in Magento2. Use it to add new SEO-specific tags inside the Magento2 GraphQL schema and make your website *SEO friendly*, boosting its ranking in the search results of the most famous search engines.
 
 If you like the module, leave a **star**! It's free for you, but keeps motivated me to help the community.
 
 ## Table of content
 
 - [Installation](#installation)
+- [Module compatibility](#module-compatibility)
 - [SEO functionalities](#seo-functionalities)
 - [General Settings](#general-settings)
 - [Hreflang Tag](#hreflang-tag)
@@ -48,6 +49,16 @@ Finalize the installation by upgrading Magento:
 ```shell
 $ bin/magento setup:upgrade
 ```
+
+## Module compatibility
+
+| Magento Version | Supported                     |
+| :-------------- | :---------------------------- |
+| 2.2             | :white_check_mark:            |
+| 2.3             | :white_check_mark:            |
+| 2.4             | :white_check_mark:            |
+
+**N.B.**: the above-mentioned module compatibility has been empirically double-checked on the indicated Magento2 versions. The module could be also compatible with previous versions, thus feel free to try it and, if compatible, contact me to update the table.
 
 ## SEO functionalities
 
