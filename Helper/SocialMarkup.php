@@ -174,7 +174,7 @@ class SocialMarkup extends AbstractHelper
                 $entityType,
                 $storeId
             );
-            return $hreflang->getUrl();
+            return $hreflang ? $hreflang->getUrl() : null;
         }
         catch (LocalizedException $e) {
             return null;
