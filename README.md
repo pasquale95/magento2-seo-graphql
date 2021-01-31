@@ -8,13 +8,16 @@ If you like the module, leave a **star**! It's free for you, but keeps motivated
 
 - [Installation](#installation)
 - [SEO functionalities](#seo-functionalities)
-- [Frontend PWA Settings](#frontend-pwa-settings)
+- [General Settings](#general-settings)
 - [Hreflang Tag](#hreflang-tag)
     - [Hreflang settings](#hreflang-settings)
     - [How to use hreflang](#how-to-use-hreflang)
 - [Social Markup Tags](#social-markup-tags)
     - [Social Markup settings](#social-markup-settings)
     - [How to use social markup](#how-to-use-social-markup)
+- [Schema.org](#schemaorg)
+    - [Schema.org settings](#schemaorg-settings)
+    - [How to use Schema.org](#how-to-use-schemaorg)
 - [Troubleshooting](#troubleshooting)
 - [Contribute](#contribute)
 
@@ -52,11 +55,13 @@ This module adds the following SEO functionalities to your Magento2:
 - **hreflang** tags;
 - **social markup** tags (also called social share tags).
 
-## Frontend PWA Settings
+## General Settings
 
-Usually the frontend server is deployed on a separated machine. If this is your case, use this section to insert the url where your frontend server is reachable. 
+This section is used to add all the general information about your e-commerce website. 
 
-![alt text](images/frontend_pwa_settings.png)
+![alt text](images/general_settings.png)
+
+With PWA technology Magento2 allows to split the backend server from the frontend server, in order to achieve better performance. If this is your case, use this section to insert the url where your frontend server is reachable.
 
 If, on the contrary, your frontend server is reachable at the same url address of the backend server, set this option to **No**. In this way the hreflang links are generated using the store **base url** of your backend server.
 
@@ -144,7 +149,8 @@ The module offers several settings to personalize the intended behaviour:
 
 In details, you can:
 - set the *site name* used to populate the `og:site_name` tag;
-- set image placeholders for categories, products and pages to use in case no image has been set for a specific item.
+- set image placeholders for categories, products and pages to use in case no image has been set for a specific item;
+- enable **Twitter** cards markup.
 
 ### How to use social markup
 
@@ -157,8 +163,14 @@ query {
     cmsPage(id:5) {
         identifier
         socialMarkup {
-            property
-            content
+            openGraph {
+              property
+              content
+            }
+            twitterCard {
+              name
+              content
+            }
         }
     }
 }
@@ -171,36 +183,60 @@ The response payload has the following layout:
     "data": {
         "cmsPage": {
             "identifier": "mypage",
-            "socialMarkup": [
-                {
-                    "property": "og:type",
-                    "content": "website"
-                },
-                {
-                    "property": "og:locale",
-                    "content": "en_US"
-                },
-                {
-                    "property": "og:site_name",
-                    "content": "Paskel SEO Pwa"
-                },
-                {
-                    "property": "og:url",
-                    "content": "https://www.paskel.com/us/en/mypage"
-                },
-                {
-                    "property": "og:title",
-                    "content": "My Page"
-                },
-                {
-                    "property": "og:description",
-                    "content": "My Page meta description"
-                },
-                {
-                    "property": "og:image",
-                    "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
-                }
-            ]
+            "socialMarkup": {
+                "openGraph": [
+                    {
+                      "property": "og:type",
+                      "content": "website"
+                    },
+                    {
+                      "property": "og:locale",
+                      "content": "en_US"
+                    },
+                    {
+                      "property": "og:site_name",
+                      "content": "Paskel SEO"
+                    },
+                    {
+                      "property": "og:url",
+                      "content": "https://www.paskel.com/us/en/mypage"
+                    },
+                    {
+                      "property": "og:title",
+                      "content": "My Page"
+                    },
+                    {
+                      "property": "og:description",
+                      "content": "My Page meta description"
+                    },
+                    {
+                      "property": "og:image",
+                      "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
+                    }
+                ],
+                "twitterCard": [
+                    {
+                      "name": "twitter:card",
+                      "content": "summary_card"
+                    },
+                    {
+                      "name": "twitter:site",
+                      "content": "@paskel"
+                    },
+                    {
+                      "name": "twitter:title",
+                      "content": "My Page"
+                    },
+                    {
+                      "name": "twitter:description",
+                      "content": "My Page meta description"
+                    },
+                    {
+                      "name": "twitter:image",
+                      "content": "http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg"
+                    }
+                ]
+            }
         }
     }
 }
@@ -218,8 +254,67 @@ Use these pieces of information to build at frontend the html social share tags 
     <meta property="og:title" content="My Page">
     <meta property="og:description" content="My Page meta description">
     <meta property="og:image" content="http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg">
+    ...
+    <meta name="twitter:card" content="summary_card">
+    <meta name="twitter:site" content="@paskel">
+    <meta name="twitter:title" content="My Page">
+    <meta name="twitter:description" content="My Page meta description">
+    <meta name="twitter:image" content="http://local.magento.it/pub/media/seo/tmp/cmspage/social.jpeg">
 </head>
 ```
+
+## Schema.org
+
+### Schema.org settings
+
+The module adds three possible schemas to enable/disable:
+- **Organization Schema**, used to add organization-related information on all pages (more details [here](https://schema.org/Organization));
+- **Website Schema**, used to add website-related information on all pages (more details [here](https://schema.org/WebSite));
+- **Product Schema**, used to add product-related information in product page (more details [here](https://schema.org/Product));
+
+![alt text](images/schemaOrg_settings.png)
+
+### How to use schema.org
+
+The module adds a new tag called `schemaOrg` inside the GraphQL schema of **categories**, **products** and **cms-pages**. Such tag returns an array of schema scripts in `JSON-LD` format (see the example below):
+
+```graphql
+query {
+    cmsPage(id:5) {
+        identifier
+        schemaOrg {
+            schemaType
+            script
+        }
+    }
+}
+```
+
+The response payload has the following layout:
+
+```json
+{
+  "data": {
+    "cmsPage": {
+      "identifier": "mypage",
+      "schemaOrg": [
+        {
+          "schemaType": "Organization",
+          "script": "<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\",\"@type\": \"Organization\",\"name\": \"Paskel\",\"url\": \"paskel.com\",\"logo\": \"http://local.magento.it/it/pub/media/seo/general/logo/default/paskel-icon.png\",\"sameAs\": [\"https://www.facebook.com/Paskel/\",\"https://www.instagram.com/Paskel/\",\"https://www.youtube.com/user/Paskel/\"]}</script>"
+        },
+        {
+          "schemaType": "WebSite",
+          "script": "<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\",\"@type\": \"WebSite\",\"name\": \"Paskel SEO\",\"url\": \"https://www.paskel.com/\"}</script>"
+        }
+      ]
+    }
+  }
+}
+```
+
+Eventually, the `script` content must be injected in the page.
+
+**N.B.**: the `schemaOrg` tag returns a third schema script once called in the products graphql, which is the Product schema.org.
 
 ## Troubleshooting
 

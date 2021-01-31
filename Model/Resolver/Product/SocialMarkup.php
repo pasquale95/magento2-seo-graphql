@@ -9,9 +9,8 @@
 
 namespace Paskel\Seo\Model\Resolver\Product;
 
-use Magento\Catalog\Model\ProductRepositoryFactory;
-use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Image\Placeholder as PlaceholderProvider;
-use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -19,49 +18,46 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\UrlInterface;
-use Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider;
-use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Helper\SocialMarkup as SocialMarkupHelper;
-use Paskel\Seo\Helper\Url as UrlHelper;
-use Paskel\Seo\Model\SocialMarkup\AbstractSocialMarkup;
+use Paskel\Seo\Model\SocialMarkup\Product\OpenGraph;
+use Paskel\Seo\Model\SocialMarkup\Product\TwitterCard;
 
 /**
  * Class SocialMarkup
  * @package Paskel\Seo\Model\Resolver\Product
- *
- * Class to resolve socialMarkup field in product GraphQL query.
  */
-class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
+class SocialMarkup implements ResolverInterface
 {
     /**
-     * @var ProductRepositoryFactory
+     * @var OpenGraph
      */
-    protected ProductRepositoryFactory $productRepositoryFactory;
+    protected OpenGraph $openGraph;
 
     /**
-     * Product resolver constructor.
-     *
-     * @param ProductRepositoryFactory $productRepositoryFactory
-     * @param StoreConfigDataProvider $storeConfigsDataProvider
-     * @param HreflangHelper $hreflangHelper
-     * @param SocialMarkupHelper $socialMarkupHelper
-     * @param PlaceholderProvider $placeholderProvider
+     * @var ProductRepositoryInterface
      */
+    protected ProductRepositoryInterface $productRepository;
+
+    /**
+     * @var TwitterCard
+     */
+    protected TwitterCard $twitterCard;
+
+    /**
+     * @var SocialMarkupHelper
+     */
+    protected SocialMarkupHelper $socialMarkupHelper;
+
     public function __construct(
-        ProductRepositoryFactory $productRepositoryFactory,
-        StoreConfigDataProvider $storeConfigsDataProvider,
-        HreflangHelper $hreflangHelper,
-        SocialMarkupHelper $socialMarkupHelper,
-        PlaceholderProvider $placeholderProvider
+        ProductRepositoryInterface $productRepository,
+        OpenGraph $openGraph,
+        TwitterCard $twitterCard,
+        SocialMarkupHelper $socialMarkupHelper
     ) {
-        $this->productRepositoryFactory = $productRepositoryFactory;
-        parent::__construct(
-            $storeConfigsDataProvider,
-            $hreflangHelper,
-            $placeholderProvider,
-            $socialMarkupHelper
-        );
+        $this->productRepository = $productRepository;
+        $this->openGraph = $openGraph;
+        $this->twitterCard = $twitterCard;
+        $this->socialMarkupHelper = $socialMarkupHelper;
     }
 
     /**
@@ -73,6 +69,7 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
      * @param array|null $value
      * @param array|null $args
      * @return array|Value
+     * @throws NoSuchEntityException
      * @throws LocalizedException
      */
     public function resolve(
@@ -82,68 +79,27 @@ class SocialMarkup extends AbstractSocialMarkup implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        $socialMarkups = [];
         // Raise exception if no product model in the request
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
         }
-        // retrieve product
-        $product = $value['model'];
         // retrieve store
         $store = $context->getExtensionAttributes()->getStore();
-        // initialise socialMarkups
-        $this->socialMarkups = [];
-
-        // add type
-        $this->setType(self::TYPE_VALUE);
-        // add locale
-        $this->setLocale($this->storeConfigDataProvider->getStoreConfigData($store)['locale']);
-        // add site_name
-        $this->setSitenameByStore($store->getId());
-        // add url
-        $this->setUrl($this->retrieveUrl($product->getId(), ProductUrlRewriteGenerator::ENTITY_TYPE, $store->getId()));
-        // add title
-        $this->setTitle(!empty($product->getMetaTitle()) ?
-            $product->getMetaTitle() : $product->getName());
-        // add description
-        $this->setDescription(!empty($product->getMetaDescription()) ?
-            $product->getMetaDescription() : $product->getDescription());
-        // add image, if any
-        $this->setImage($this->retrieveImage($product->getId(), $store));
-
-        return $this->socialMarkups;
-    }
-
-    /**
-     * Retrieve product image url.
-     * If not, use placeholder image.
-     *
-     * @param $productId
-     * @param $store
-     * @return string|null
-     * @throws NoSuchEntityException
-     */
-    public function retrieveImage($productId, $store) {
-        // TODO: add twitter cards
-        // retrieve store info
-        $storeId = $store->getId();
-        $storeUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
-        // factory made necessary to get the image, if any
-        $productFactory = $this->productRepositoryFactory->create();
-        $product = $productFactory->getById($productId);
-
-        $imageUrl = $product->getImage();
-        if (!empty($imageUrl)) {
-            $imageUrl = UrlHelper::pinchUrl($storeUrl . 'catalog/product', $imageUrl);
-        } else {
-            $imageUrl = $this->socialMarkupHelper->getImagePlaceholder(
-                ProductUrlRewriteGenerator::ENTITY_TYPE,
-                $storeId
+        // retrieve product
+        /** @var Product $product */
+        $product = $this->productRepository->getById($value['model']->getId());
+        // retrieve openGraph tags and add them to the array
+        $socialMarkups['openGraph'] = $this->socialMarkupHelper->formatOpenGraphTagsForGraphQl(
+            $this->openGraph->getTags($product, $store)
+        );
+        // if twitter cards are enabled, add twitter tags
+        if ($this->socialMarkupHelper->isTwitterCardEnabled($store->getId())) {
+            $socialMarkups['twitterCard'] = $this->socialMarkupHelper->formatTwitterCardTagsForGraphQl(
+                $this->twitterCard->getTags($product, $store)
             );
-            if (!empty($imageUrl)) {
-                // return placeholder
-                $imageUrl = UrlHelper::pinchUrl($storeUrl . self::PLACEHOLDER_FOLDER, $imageUrl);
-            }
         }
-        return $imageUrl ?? null;
+
+        return $socialMarkups;
     }
 }

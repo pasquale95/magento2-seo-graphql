@@ -12,6 +12,7 @@ namespace Paskel\Seo\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Config\Model\Config\Backend\Admin\Custom;
@@ -40,18 +41,26 @@ class Store extends AbstractHelper
     protected $frontendSettings;
 
     /**
+     * @var Json
+     */
+    protected Json $jsonHandler;
+
+    /**
      * Store constructor.
      * @param Context $context
      * @param StoreManagerInterface $storeManager
      * @param FrontendSettings $frontendSettings
+     * @param Json $jsonHandler
      */
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
-        FrontendSettings $frontendSettings
+        FrontendSettings $frontendSettings,
+        Json $jsonHandler
     ) {
         $this->storeManager = $storeManager;
         $this->frontendSettings = $frontendSettings;
+        $this->jsonHandler = $jsonHandler;
         parent::__construct($context);
     }
 
@@ -88,12 +97,28 @@ class Store extends AbstractHelper
             );
         } else {
             // otherwise, check for possible custom options
-            $code = $this->scopeConfig->getValue(
+            $customCode = $this->scopeConfig->getValue(
                 'seo/hreflang/custom_hreflang',
                 ScopeInterface::SCOPE_STORE,
                 $storeId
             );
-            if (!$code) {
+            if ($customCode) {
+                $config = current($this->jsonHandler->unserialize($customCode));
+                if (is_array($config) and array_key_exists('language', $config)
+                    and array_key_exists('country', $config)
+                ) {
+                    if ($config['country']) {
+                        // country specified -> create hreflang code of type <language-country>
+                        $code = $config['language'] . "-" . $config['country'];
+                    } else {
+                        // no country specified -> create hreflang code of type <language>
+                        $code = $config['language'];
+                    }
+                }
+            }
+
+            // fallback logic: return hreflang code if no custom code has been defined
+            if (!isset($code)) {
                 //if no custom options, look at the standard hreflang
                 $code = $this->scopeConfig->getValue(
                     'seo/hreflang/hreflang_lang',

@@ -15,9 +15,15 @@
     <event name="catalog_product_save_after">
         <observer name="product_hreflang_save" instance="Paskel\Seo\Observer\Hreflang\ProductSave" />
     </event>
-    <event name="cms_page_prepare_save">
+    <event name="cms_page_save_after">
         <observer name="product_hreflang_save" instance="Paskel\Seo\Observer\Hreflang\CmsPageSave" />
+    </event>
+    <event name="cms_page_prepare_save">
         <observer name="preview_image" instance="Paskel\Seo\Observer\SocialMarkup\PreviewImage" />
+    </event>
+    <!-- To trigger hreflang updates when new configs are applied -->
+    <event name="admin_system_config_changed_section_seo">
+        <observer name="update_hreflang_on_config_save" instance="Paskel\Seo\Observer\Hreflang\ConfigSave" />
     </event>
     <!--<event name="catalog_product_delete_before">
         <observer name="category_hreflang_delete" instance="Magento\MediaContentCatalog\Observer\ProductDelete" />

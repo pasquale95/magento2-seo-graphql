@@ -9,6 +9,7 @@
 
 namespace Paskel\Seo\Controller\Adminhtml\SocialMarkup;
 
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Catalog\Model\ImageUploader;
@@ -50,7 +51,7 @@ class ImageUpload extends Action
     {
         try {
             $result = $this->imageUploader->saveFileToTmpDir(SocialMarkupInterface::IMAGE_FIELD_DB);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
