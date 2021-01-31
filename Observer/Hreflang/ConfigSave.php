@@ -9,13 +9,9 @@
 
 namespace Paskel\Seo\Observer\Hreflang;
 
-use Magento\Cms\Model\Page;
-use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator;
-use Magento\Cms\Model\Page\Authorization;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Paskel\Seo\Helper\Hreflang as HreflangHelper;
 use Paskel\Seo\Console\Hreflang;
 
 /**

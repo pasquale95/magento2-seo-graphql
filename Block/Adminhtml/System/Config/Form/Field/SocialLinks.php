@@ -10,10 +10,6 @@
 namespace Paskel\Seo\Block\Adminhtml\System\Config\Form\Field;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
-use Magento\Framework\DataObject;
-use Magento\Framework\Exception\LocalizedException;
-use Paskel\Seo\Block\Adminhtml\System\Config\Form\Field\Column\CountryColumn;
-use Paskel\Seo\Block\Adminhtml\System\Config\Form\Field\Column\LanguageColumn;
 
 /**
  * Class SocialLinks

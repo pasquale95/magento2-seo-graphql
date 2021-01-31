@@ -9,6 +9,7 @@
 
 namespace Paskel\Seo\Plugin\SocialMarkup;
 
+use Exception;
 use Magento\Cms\Model\Page\DataProvider;
 use Magento\Framework\Filesystem\DirectoryList;
 use Paskel\Seo\Api\Data\SocialMarkupInterface;
@@ -58,7 +59,7 @@ class ImageUploaderFixer
                         $pubPath = $this->_dir->getPath('pub');
                         $size = filesize($pubPath . $imageUrl);
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // silence exception
                 }
                 $image = [

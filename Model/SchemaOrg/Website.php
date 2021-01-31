@@ -11,13 +11,10 @@ namespace Paskel\Seo\Model\SchemaOrg;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Paskel\Seo\Helper\FrontendSettings;
-use Paskel\Seo\Helper\Url as UrlHelper;
 
 /**
  * Class Website
